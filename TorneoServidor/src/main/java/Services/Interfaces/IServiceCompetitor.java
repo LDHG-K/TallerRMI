@@ -5,10 +5,20 @@
  */
 package Services.Interfaces;
 
+import Models.Competitor;
+
 /**
  *
  * @author Luis
  */
 public interface IServiceCompetitor {
     
+    Competitor searchCompetitorById(long id);
+    
+    void updateCompetitor(Competitor competitor);
+    
+    void deleteCompetitor(long id);
+    
+    void createCompetitor(Competitor competitor);
+
 }

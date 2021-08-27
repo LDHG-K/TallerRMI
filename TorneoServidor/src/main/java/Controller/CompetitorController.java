@@ -11,4 +11,11 @@ package Controller;
  */
 public class CompetitorController {
     
+    
+    public void createCompetitor(){
+        
+    }
+    
+    
+    
 }

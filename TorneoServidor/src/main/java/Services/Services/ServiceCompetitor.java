@@ -8,6 +8,7 @@ package Services.Services;
 
 import Models.Competitor;
 import Services.Interfaces.IServiceCompetitor;
+import java.sql.Connection;
 import javax.swing.Icon;
 
 /**
@@ -16,6 +17,16 @@ import javax.swing.Icon;
  */
 public class ServiceCompetitor implements IServiceCompetitor{
 
+    
+    private Connection connection;
+    
+    
+    public ServiceCompetitor(Connection connection){
+        this.connection = connection;
+    }
+    
+    
+    
     @Override
     public Competitor searchCompetitorById(long id) {
         
