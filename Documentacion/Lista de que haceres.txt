@@ -9,6 +9,17 @@
 
 4.Definir numero de ventanas
   y sus funcionalidades
+
+(gui´s)
+1. Principal (bajo criterios)
+2. Insertar 
+3. Eliminar (incluye buscar)
+4. Actualizar(incluye buscar)
+5. Mostrar (mostrar todos)
+6. Buscar 1 en especial 
+6. Grafico (libreria de graficos)
+
+- probar
   
 5.versionamiento
 
