@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.grupo4.torneoservidor.Model.DTOs;
+package Controller;
 
 /**
  *
  * @author Luis
  */
-public class DtoExample {
+public class TableControler {
     
 }
