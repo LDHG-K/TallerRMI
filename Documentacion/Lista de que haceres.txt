@@ -1,0 +1,14 @@
+1.DISEÑAR ARQUITECTURA
+
+2.DISEÑAR EL RMI
+
+3.Definir el objeto
+  - crear la DB
+  - crear el modelo
+  - crear la estructura
+
+4.Definir numero de ventanas
+  y sus funcionalidades
+  
+5.versionamiento
+
