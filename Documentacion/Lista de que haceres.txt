@@ -1,5 +1,7 @@
 1.DISEÑAR ARQUITECTURA
 
+se creo el diagrama entidad relacion
+
 2.DISEÑAR EL RMI
 
 3.Definir el objeto
