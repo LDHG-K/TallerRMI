@@ -21,6 +21,7 @@ public class ServiceCompetitor implements IServiceCompetitor{
     private Connection connection;
     
     
+    
     public ServiceCompetitor(Connection connection){
         this.connection = connection;
     }
