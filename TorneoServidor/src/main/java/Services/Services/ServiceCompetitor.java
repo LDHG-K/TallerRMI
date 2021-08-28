@@ -14,6 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -95,7 +96,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                                                 + competitor.getApodo()+",'"
                                                 + competitor.getFechaInscripcion()+",'"
                                                 + competitor.getFechaCaducidad()+ "')";
-                                                
+
         try {
             if (!connection.executeUpdateStatement(cad)) {
                 throw new Exception("Operacion no ejecutada");
@@ -109,7 +110,32 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     @Override
     public List<Competitor> searchAll() throws RemoteException {
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String cad = "SELECT * FROM participantes";
+            ResultSet res;
+            ArrayList<Competitor> competitors = new ArrayList<>();
+
+            int id;
+            String apodo;
+            LocalDate fechaInscripcion;
+            LocalDate fechaCaducidad;
+
+            res = connection.executeQueryStatement(cad);
+            while(res.next()){
+
+                id = Integer.parseInt(res.getString(1));
+                apodo = res.getString(2);
+                fechaInscripcion = LocalDate.parse(res.getString(3));
+                fechaCaducidad = LocalDate.parse(res.getString(4));
+
+                competitors.add(new Competitor(id, apodo, fechaInscripcion, fechaCaducidad));
+                              
+            }
+            return competitors;
+        } catch (SQLException ex) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
     
     
