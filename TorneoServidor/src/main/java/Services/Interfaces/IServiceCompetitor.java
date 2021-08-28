@@ -8,6 +8,7 @@ package Services.Interfaces;
 import Models.Competitor;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -22,5 +23,7 @@ public interface IServiceCompetitor extends Remote {
     void deleteCompetitor(long id)throws RemoteException;
     
     void createCompetitor(Competitor competitor)throws RemoteException;
+    
+    List<Competitor> searchAll()throws RemoteException;
 
 }

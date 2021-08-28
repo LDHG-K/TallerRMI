@@ -14,6 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -81,6 +82,12 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     @Override
     public void createCompetitor(Competitor competitor)throws RemoteException {
         
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Competitor> searchAll() throws RemoteException {
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
