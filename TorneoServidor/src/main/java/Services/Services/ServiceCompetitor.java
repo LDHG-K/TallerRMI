@@ -8,19 +8,24 @@ package Services.Services;
 
 import Models.Competitor;
 import Services.Interfaces.IServiceCompetitor;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
-import javax.swing.Icon;
+import java.sql.ResultSet;
 
 /**
  *
  * @author Luis
  */
-public class ServiceCompetitor implements IServiceCompetitor{
+public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceCompetitor{
 
     
     private Connection connection;
+    private ResultSet resulset;
     
     
+    public ServiceCompetitor(){
+       
+    }
     
     public ServiceCompetitor(Connection connection){
         this.connection = connection;
