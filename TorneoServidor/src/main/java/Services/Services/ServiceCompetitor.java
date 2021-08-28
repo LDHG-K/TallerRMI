@@ -91,7 +91,19 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     public void createCompetitor(Competitor competitor)throws RemoteException {
         
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String cad = "INSERT INTO MATERIA VALUES("+  competitor.getId()   +",'"
+                                                + competitor.getApodo()+",'"
+                                                + competitor.getFechaInscripcion()+",'"
+                                                + competitor.getFechaCaducidad()+ "')";
+                                                
+        try {
+            if (!connection.executeUpdateStatement(cad)) {
+                throw new Exception("Operacion no ejecutada");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
     @Override
