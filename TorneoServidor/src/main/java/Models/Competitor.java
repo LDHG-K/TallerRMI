@@ -5,6 +5,7 @@
  */
 package Models;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -15,10 +16,10 @@ public class Competitor {
 
     private int id;
     private String apodo;
-    private Date fechaInscripcion;
-    private Date fechaCaducidad;
+    private LocalDate fechaInscripcion;
+    private LocalDate fechaCaducidad;
 
-    public Competitor(int id, String apodo, Date fechaInscripcion, Date fechaCaducidad) {
+    public Competitor(int id, String apodo, LocalDate fechaInscripcion, LocalDate fechaCaducidad) {
         this.id = id;
         this.apodo = apodo;
         this.fechaInscripcion = fechaInscripcion;
@@ -41,19 +42,19 @@ public class Competitor {
         this.apodo = apodo;
     }
 
-    public Date getFechaInscripcion() {
+    public LocalDate getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(Date fechaInscripcion) {
+    public void setFechaInscripcion(LocalDate fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public Date getFechaCaducidad() {
+    public LocalDate getFechaCaducidad() {
         return fechaCaducidad;
     }
 
-    public void setFechaCaducidad(Date fechaCaducidad) {
+    public void setFechaCaducidad(LocalDate fechaCaducidad) {
         this.fechaCaducidad = fechaCaducidad;
     }
 

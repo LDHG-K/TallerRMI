@@ -5,6 +5,7 @@
  */
 package AppServidor;
 
+import Repository.ConnectionDB;
 import Services.Services.ServiceCompetitor;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -21,7 +22,8 @@ public class App {
         try 
         { 
             //ServicioHola model = new ServicioHola();
-            Services.Services.ServiceCompetitor model = new ServiceCompetitor();
+            ConnectionDB connection = new ConnectionDB(); 
+            Services.Services.ServiceCompetitor model = new ServiceCompetitor(connection);
             LocateRegistry.createRegistry(1099);
             Naming.rebind("//192.168.1.7/ServidorHolaMundo", model);
             System.out.println("Servidor operando");
