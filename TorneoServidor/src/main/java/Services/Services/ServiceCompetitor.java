@@ -76,7 +76,15 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     public void deleteCompetitor(long id)throws RemoteException {
         
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String cad = "DELETE FROM participantes WHERE id="+id;
+        try {
+            if (!connection.executeUpdateStatement(cad)) {
+                throw new Exception("Operacion no ejecutada");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 
     @Override
