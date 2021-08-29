@@ -125,8 +125,8 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
 
                 id = Integer.parseInt(res.getString(1));
                 apodo = res.getString(2);
-                fechaInscripcion = LocalDate.parse(res.getString(3));
-                fechaCaducidad = LocalDate.parse(res.getString(4));
+                fechaInscripcion = res.getObject(3, LocalDate.class);
+                fechaCaducidad = res.getObject(4, LocalDate.class);
 
                 competitors.add(new Competitor(id, apodo, fechaInscripcion, fechaCaducidad));
                               

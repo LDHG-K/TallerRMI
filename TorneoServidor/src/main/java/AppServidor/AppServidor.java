@@ -14,7 +14,7 @@ import java.rmi.registry.LocateRegistry;
  *
  * @author Luis
  */
-public class App {
+public class AppServidor {
     
     public static void main(String[] args) {
         
@@ -25,7 +25,7 @@ public class App {
             ConnectionDB connection = new ConnectionDB(); 
             Services.Services.ServiceCompetitor model = new ServiceCompetitor(connection);
             LocateRegistry.createRegistry(1099);
-            Naming.rebind("//192.168.1.7/ServidorHolaMundo", model);
+            Naming.rebind("//127.0.0.1/ServidorHolaMundo", model);
             System.out.println("Servidor operando");
         } 
         catch (Exception e) 
