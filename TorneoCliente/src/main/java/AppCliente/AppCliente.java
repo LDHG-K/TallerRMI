@@ -1,6 +1,7 @@
 package AppCliente;
 
 import java.rmi.Naming;
+import java.sql.Date;
 import java.time.LocalDate;
 
 import Models.Competitor;
@@ -20,7 +21,7 @@ public class AppCliente
         { 
            IServiceCompetitor obj = (IServiceCompetitor) Naming.lookup( "//" + 
                 "127.0.0.1" + "/ServidorHolaMundo");  
-                Competitor competitor = new Competitor(1, "apodo", LocalDate.now(), LocalDate.now());     
+                Competitor competitor = new Competitor(2, "apodo2", Date.valueOf("2020-10-08"), Date.valueOf("2020-10-08") );     
                 System.out.println(competitor.getApodo());
            obj.createCompetitor(competitor);
              

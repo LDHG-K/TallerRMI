@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 /**
  *
@@ -43,8 +44,8 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                 
                 searched.setId(Integer.parseInt(res.getString(1)));
                 searched.setApodo(res.getString(2));
-                searched.setFechaInscripcion(res.getObject(3, LocalDate.class));
-                searched.setFechaCaducidad(res.getObject(4, LocalDate.class));
+                searched.setFechaInscripcion(res.getObject(3, Date.class));
+                searched.setFechaCaducidad(res.getObject(4, Date.class));
                         
             }
         } catch (SQLException ex) {
@@ -93,9 +94,11 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         
         
         String cad = "INSERT INTO participante VALUES("+  competitor.getId()   +",'"
-                                                + competitor.getApodo()+",'"
-                                                + competitor.getFechaInscripcion()+",'"
+                                                + competitor.getApodo()+"','"
+                                                + competitor.getFechaInscripcion()+"','"
                                                 + competitor.getFechaCaducidad()+ "')";
+
+        
 
         try {
             if (!connection.executeUpdateStatement(cad)) {
@@ -117,16 +120,16 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
 
             int id;
             String apodo;
-            LocalDate fechaInscripcion;
-            LocalDate fechaCaducidad;
+            Date fechaInscripcion;
+            Date fechaCaducidad;
 
             res = connection.executeQueryStatement(cad);
             while(res.next()){
 
                 id = Integer.parseInt(res.getString(1));
                 apodo = res.getString(2);
-                fechaInscripcion = res.getObject(3, LocalDate.class);
-                fechaCaducidad = res.getObject(4, LocalDate.class);
+                fechaInscripcion = res.getObject(3, Date.class);
+                fechaCaducidad = res.getObject(4, Date.class);
 
                 competitors.add(new Competitor(id, apodo, fechaInscripcion, fechaCaducidad));
                               

@@ -6,8 +6,9 @@
 package Models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.util.Date;
+//import java.time.LocalDate;
+//import java.util.Date;
+import java.sql.Date;
 
 /**
  *
@@ -15,12 +16,14 @@ import java.util.Date;
  */
 public class Competitor implements Serializable{
 
+    private static final long serialVersionUID = 6529685098267757690L;
+    
     private int id;
     private String apodo;
-    private LocalDate fechaInscripcion;
-    private LocalDate fechaCaducidad;
+    private Date fechaInscripcion;
+    private Date fechaCaducidad;
 
-    public Competitor(int id, String apodo, LocalDate fechaInscripcion, LocalDate fechaCaducidad) {
+    public Competitor(int id, String apodo, Date fechaInscripcion, Date fechaCaducidad) {
         this.id = id;
         this.apodo = apodo;
         this.fechaInscripcion = fechaInscripcion;
@@ -43,19 +46,19 @@ public class Competitor implements Serializable{
         this.apodo = apodo;
     }
 
-    public LocalDate getFechaInscripcion() {
+    public Date getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(LocalDate fechaInscripcion) {
+    public void setFechaInscripcion(Date fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public LocalDate getFechaCaducidad() {
+    public Date getFechaCaducidad() {
         return fechaCaducidad;
     }
 
-    public void setFechaCaducidad(LocalDate fechaCaducidad) {
+    public void setFechaCaducidad(Date fechaCaducidad) {
         this.fechaCaducidad = fechaCaducidad;
     }
 
