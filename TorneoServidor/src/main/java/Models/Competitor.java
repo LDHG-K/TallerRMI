@@ -5,6 +5,7 @@
  */
 package Models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  *
  * @author Luis
  */
-public class Competitor {
+public class Competitor implements Serializable{
 
     private int id;
     private String apodo;
