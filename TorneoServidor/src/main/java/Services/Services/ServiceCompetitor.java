@@ -114,7 +114,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     public List<Competitor> searchAll() throws RemoteException {
         
         try {
-            String cad = "SELECT * FROM participantes";
+            String cad = "SELECT * FROM participante";
             ResultSet res;
             ArrayList<Competitor> competitors = new ArrayList<>();
 
