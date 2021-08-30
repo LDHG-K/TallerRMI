@@ -18,23 +18,23 @@ public class Competitor implements Serializable{
 
     private static final long serialVersionUID = 6529685098267757690L;
     
-    private int id;
+    private long id;
     private String apodo;
     private Date fechaInscripcion;
     private Date fechaCaducidad;
 
-    public Competitor(int id, String apodo, Date fechaInscripcion, Date fechaCaducidad) {
+    public Competitor(long id, String apodo, Date fechaInscripcion, Date fechaCaducidad) {
         this.id = id;
         this.apodo = apodo;
         this.fechaInscripcion = fechaInscripcion;
         this.fechaCaducidad = fechaCaducidad;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

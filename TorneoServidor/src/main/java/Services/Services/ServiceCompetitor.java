@@ -42,10 +42,9 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             res = connection.executeQueryStatement(cad);
             while(res.next()){
                 
-                searched.setId(Integer.parseInt(res.getString(1)));
-                searched.setApodo(res.getString(2));
-                searched.setFechaInscripcion(res.getObject(3, Date.class));
-                searched.setFechaCaducidad(res.getObject(4, Date.class));
+                searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
+
+                
                         
             }
         } catch (SQLException ex) {
