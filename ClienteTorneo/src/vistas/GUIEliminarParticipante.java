@@ -5,7 +5,12 @@
  */
 package vistas;
 
+import Models.Competitor;
 import Services.Interfaces.IServiceCompetitor;
+import controllers.CompetitorController;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -16,13 +21,14 @@ import javax.swing.JOptionPane;
 public class GUIEliminarParticipante extends javax.swing.JFrame {
     
     private IServiceCompetitor servicioCompetidor;
-    
- 
+    private CompetitorController competitorController;
+    private Competitor participante;
 
     public GUIEliminarParticipante(IServiceCompetitor servicioCompetitor) {
         this.servicioCompetidor = servicioCompetidor;
         initComponents();
         setLocationRelativeTo(null);
+        competitorController = new CompetitorController(servicioCompetitor);
     }
 
     /**
@@ -144,32 +150,41 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         Long id = Long.parseLong(txtCodigo.getText());
 
-       /* try {
+        
+        try {
             participante = competitorController.buscarParticipante(id);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+            
             txtApodo.setText(participante.getApodo());
             jDateChooser1.setDate(participante.getFechaInscripcion());
             jDateChooser2.setDate(participante.getFechaCaducidad());
-        } catch (RemoteException ex) {
-            JOptionPane.showMessageDialog(this, "El participante de código " + id +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
-            txtCodigo.setText("");
-            txtCodigo.grabFocus();
-            Logger.getLogger(GUIConsultarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-*/
+        
+
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnConsultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultar1ActionPerformed
-        // TODO 
-         //JOptionPane.showMessageDialog(null, "Hello World");
-        //int dialogButton = JOptionPane.showConfirmDialog (null, "Are you sure?","WARNING", JOptionPane.YES_NO_CANCEL_OPTION);
-         
-        if (JOptionPane.showConfirmDialog(null, "Are you sure?", "WARNING",
+        
+        
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro que este es el item a eliminar?", "WARNING",
         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            // yes option
+            try {
+                competitorController.eliminarParticipante(participante);
+            } catch (RemoteException ex) {
+                Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
-            // no option
+            
+        txtCodigo.setText("");
+        txtApodo.setText("");
+        jDateChooser1.setDate(null);
+        jDateChooser2.setDate(null);
+        
         }
       
+        
     }//GEN-LAST:event_btnConsultar1ActionPerformed
 
     /**
