@@ -158,7 +158,7 @@ public class GUIEditarParticipante extends javax.swing.JFrame {
         
         
        try {
-           competitorController.agregarParticipante(new Competitor(Long.parseLong(txtApodo.getText()),apodo,fecha1,fecha2));
+           competitorController.editarParticipante(new Competitor(Long.parseLong(txtID.getText()),apodo,fecha1,fecha2));
        } catch (RemoteException ex) {
            Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
        }

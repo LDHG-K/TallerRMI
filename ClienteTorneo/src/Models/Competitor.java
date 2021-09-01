@@ -72,7 +72,7 @@ private static final long serialVersionUID = 6529685098267757690L;
     
     public void verficarInvariante(){
         assert apodo == null && !apodo.equals("") : "El participante debe tener un apodo";
-        assert id>0 : "id debe ser mayor a 0";
+        assert id>=0 : "id debe ser mayor a 0";
         assert fechaCaducidad.after(new Date()) : "No se puede añadir una fecha de caducidad atrazada";
     }
 }

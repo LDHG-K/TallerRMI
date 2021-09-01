@@ -65,10 +65,10 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     @Override
     public void updateCompetitor(Competitor competitor)throws RemoteException {
         
-        String cad = "UPDATE participante SET apodo ="+competitor.getApodo()+
-                "fecha_inscripcion =" + competitor.getFechaInscripcion()+
-                "fecha_caducidad ="+competitor.getFechaCaducidad()+
-                "WHERE id = "+competitor.getId();
+        String cad = "UPDATE participante SET apodo ='"+competitor.getApodo()+
+                "', fecha_inscripcion ='" + competitor.getFechaInscripcion()+
+                "', fecha_caducidad ='"+competitor.getFechaCaducidad()+
+                "' WHERE id = "+competitor.getId();
         try {
             if (!connection.executeUpdateStatement(cad)) {
                 throw new Exception("Operacion no ejecutada");
