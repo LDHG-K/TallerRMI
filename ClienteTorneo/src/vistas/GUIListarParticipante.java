@@ -7,11 +7,12 @@ package Vistas;
 
 import Models.Competitor;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import Services.Interfaces.IServiceCompetitor;
+import controllers.CompetitorController;
+import java.util.List;
 
 import vistas.IUpgradeableCompetitor;
 
@@ -23,6 +24,7 @@ import vistas.IUpgradeableCompetitor;
 public class GUIListarParticipante extends javax.swing.JFrame implements IUpgradeableCompetitor{
 
     private IServiceCompetitor servicioCompetidor;
+    private CompetitorController competitorController;
     /**
      * Creates new form GUIListarEstudiante
      */
@@ -30,6 +32,7 @@ public class GUIListarParticipante extends javax.swing.JFrame implements IUpgrad
         initComponents();
         servicioCompetidor = ser;
         setLocationRelativeTo(null);
+        competitorController = new CompetitorController(ser);
     }
 
     /**
@@ -129,19 +132,18 @@ public class GUIListarParticipante extends javax.swing.JFrame implements IUpgrad
     
     private void refrescarListaEstudiantes(){
         DefaultTableModel model = (DefaultTableModel)grilla.getModel();
-        ArrayList <Competitor> estudiantes = null;
-        
-        /*
+        List<Competitor> participantes = null;
+
         try {
-            estudiantes = servicioCompetidor.getEstudiantes();
+            participantes = competitorController.listarParticipantes();
         } catch (RemoteException ex) {
             Logger.getLogger(GUIListarParticipante.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
         
         model.setRowCount(0);
-        for(Competitor est: estudiantes){
-           // model.addRow(new Object[]{est.getCodigo(),est.getNombre(),est.getDireccion()});
+        
+        for(Competitor com: participantes){
+            model.addRow(new Object[]{com.getId(),com.getApodo(),com.getFechaCaducidad(),com.getFechaInscripcion()});
         }
         
     }
