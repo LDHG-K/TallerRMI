@@ -146,10 +146,15 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
             jDateChooser1.setDate(participante.getFechaInscripcion());
             jDateChooser2.setDate(participante.getFechaCaducidad());
         } catch (RemoteException ex) {
+            //System.out.println("hola");
             JOptionPane.showMessageDialog(this, "El participante de código " + id +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
-            txtCodigo.setText("");
-            txtCodigo.grabFocus();    
-            Logger.getLogger(GUIConsultarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+            //txtCodigo.setText("");
+            //txtCodigo.grabFocus();    
+            //Logger.getLogger(GUIConsultarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+           
+          
+        } catch (Exception ex) {
+           // Logger.getLogger(GUIConsultarParticipante.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnConsultarActionPerformed

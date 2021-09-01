@@ -10,6 +10,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import Services.Interfaces.IServiceCompetitor;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,7 +24,13 @@ public class CompetitorController {
         this.servicio = servicio;
     }
 
-   public Competitor buscarParticipante(Long id) throws RemoteException{
+   public Competitor buscarParticipante(Long id) throws RemoteException, Exception{
+       
+       if(servicio.searchCompetitorById(id)==null)
+       {
+           JOptionPane.showMessageDialog(null, "El participante de código " + id +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
+       }
+       
        return servicio.searchCompetitorById(id);
    } 
     
