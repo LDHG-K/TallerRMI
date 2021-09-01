@@ -134,6 +134,7 @@ public class GUIEditarParticipante extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        
         String apodo;
         String nombre;
         String direccion;
