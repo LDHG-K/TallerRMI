@@ -7,6 +7,7 @@ package vistas;
 
 import Services.Interfaces.IServiceCompetitor;
 import controllers.CompetitorController;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -27,19 +28,19 @@ public class GUIGraficoMatriculadosParticipates extends javax.swing.JFrame {
     /**
      * Creates new form GUIGraficoMatriculadosParticipates
      */
-    public GUIGraficoMatriculadosParticipates(IServiceCompetitor ser) {
+    public GUIGraficoMatriculadosParticipates(IServiceCompetitor ser) throws RemoteException {
         competitorController= new CompetitorController(ser);
         initComponents();
         CategoryDataset dataset = createDataset();
         JFreeChart chart = ChartFactory.createBarChart("GRAFICA DE BARRA PARTICIPANTES POR MES"
-                + "", "X", "Y", dataset, PlotOrientation.VERTICAL, true, true, false);
+                + "", "MES", "NUMERO DE INSCRITOS", dataset, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panel = new ChartPanel(chart);
         setContentPane(panel);
         
         
     }
 
-    private CategoryDataset createDataset(){
+    private CategoryDataset createDataset() throws RemoteException{
         
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         
