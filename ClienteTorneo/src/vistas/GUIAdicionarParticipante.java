@@ -5,8 +5,10 @@
  */
 package Vistas;
 
+import controllers.CompetitorController;
 import estructural.Competitor;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,7 +21,7 @@ import model.IServiceCompetitor;
 public class GUIAdicionarParticipante extends javax.swing.JFrame {
 
     private IServiceCompetitor serviceCompetitor;
-    
+    private CompetitorController competitorController;
     /**
      * Creates new form GUIAdicionarEstudiante
      */
@@ -39,19 +41,15 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        txtDireccion = new javax.swing.JTextField();
+        txtApodo = new javax.swing.JTextField();
         btnAdicionar = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adicionar Participante");
 
         jLabel1.setText("Apodo: ");
-
-        jLabel2.setText("Fecha Ingreso: ");
 
         jLabel3.setText("Fecha Caducidad:");
 
@@ -70,22 +68,19 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(15, 15, 15))
+                        .addComponent(jLabel1)
+                        .addGap(53, 53, 53))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnAdicionar)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(182, 182, 182)
+                        .addComponent(btnAdicionar))
+                    .addComponent(txtApodo, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -94,16 +89,12 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(43, 43, 43)
+                    .addComponent(txtApodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
                 .addComponent(btnAdicionar)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -112,14 +103,25 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        String apodo;
+        String apodo = txtApodo.getText();
+        Date fecha = jDateChooser1.getDate();
+        
+        
+        
+        try {
+            Competitor participante = new Competitor( apodo, fecha);
+            competitorController.agregarParticipante(participante);
+        } catch (Exception e) {
+        }
+        
+        
         String nombre;
         String direccion;
         Competitor com = null;
         
-        apodo = txtCodigo.getText();
-        nombre = txtNombre.getText().trim();
-        direccion = txtDireccion.getText().trim();
+        apodo = txtApodo.getText();
+        //nombre = txtNombre.getText().trim();
+        //direccion = txtDireccion.getText().trim();
         /*
         est = new Competitor(codigo, nombre, direccion);
         
@@ -131,20 +133,18 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
         */
         JOptionPane.showMessageDialog(this, "El estudiante ha sido adicionado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         
-        txtCodigo.setText("");
-        txtNombre.setText("");
-        txtDireccion.setText("");
-        txtCodigo.grabFocus();
+        txtApodo.setText("");
+        //txtNombre.setText("");
+        //txtDireccion.setText("");
+        txtApodo.grabFocus();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtApodo;
     // End of variables declaration//GEN-END:variables
 }

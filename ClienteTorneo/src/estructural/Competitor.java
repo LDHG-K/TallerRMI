@@ -6,8 +6,7 @@
 package estructural;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.Date;
 
 
 /**
@@ -20,17 +19,17 @@ private static final long serialVersionUID = 6529685098267757690L;
     
     private long id;
     private String apodo;
-    private java.sql.Date fechaInscripcion;
-    private java.sql.Date fechaCaducidad;
+    private Date fechaInscripcion;
+    private Date fechaCaducidad;
 
-    public Competitor(long id, String apodo, java.sql.Date fechaCaducidad) {
-        this.id = id;
+    public Competitor( String apodo, Date fechaCaducidad) {
+        
         this.apodo = apodo;
-        this.fechaInscripcion = Date.valueOf(LocalDate.now());
+        this.fechaInscripcion = new Date();
         this.fechaCaducidad = fechaCaducidad;
     }
     
-    public Competitor(long id, String apodo,java.sql.Date fechaDeInscripcion, java.sql.Date fechaCaducidad) {
+    public Competitor(long id, String apodo,Date fechaDeInscripcion, Date fechaCaducidad) {
         this.id = id;
         this.apodo = apodo;
         this.fechaInscripcion = fechaDeInscripcion;
@@ -53,7 +52,7 @@ private static final long serialVersionUID = 6529685098267757690L;
         this.apodo = apodo;
     }
 
-    public java.sql.Date getFechaInscripcion() {
+    public Date getFechaInscripcion() {
         return fechaInscripcion;
     }
 
@@ -61,7 +60,7 @@ private static final long serialVersionUID = 6529685098267757690L;
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public java.sql.Date getFechaCaducidad() {
+    public Date getFechaCaducidad() {
         return fechaCaducidad;
     }
 
@@ -73,6 +72,6 @@ private static final long serialVersionUID = 6529685098267757690L;
     public void verficarInvariante(){
         assert apodo == null && !apodo.equals("") : "El participante debe tener un apodo";
         assert id>0 : "id debe ser mayor a 0";
-        assert fechaCaducidad.after(Date.valueOf(LocalDate.now())) : "No se puede añadir una fecha de caducidad atrazada";
+        assert fechaCaducidad.after(new Date()) : "No se puede añadir una fecha de caducidad atrazada";
     }
 }
