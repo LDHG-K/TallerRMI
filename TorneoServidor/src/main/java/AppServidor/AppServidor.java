@@ -25,7 +25,7 @@ public class AppServidor {
             ConnectionDB connection = new ConnectionDB(); 
             Services.Services.ServiceCompetitor model = new ServiceCompetitor(connection);
             LocateRegistry.createRegistry(1099);
-            Naming.rebind("//127.0.0.1/ServidorHolaMundo", model);
+            Naming.rebind("//127.0.0.1/ServidorGrupo4", model);
             System.out.println("Servidor operando");
         } 
         catch (Exception e) 

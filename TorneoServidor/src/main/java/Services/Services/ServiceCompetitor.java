@@ -9,6 +9,7 @@ package Services.Services;
 import Models.Competitor;
 import Repository.ConnectionDB;
 import Services.Interfaces.IServiceCompetitor;
+import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
@@ -17,6 +18,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,10 +27,14 @@ import java.sql.Date;
  */
 public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceCompetitor{
 
+     private ArrayList<IUpgradeableCompetitor> guisCompetitors;
+    
+    
     private ConnectionDB connection;
     
     public ServiceCompetitor(ConnectionDB connection)throws RemoteException{
-       this.connection = connection;
+       guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
+        this.connection = connection;
     }
     
     
@@ -139,9 +146,23 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         }
         
     }
+
+    @Override
+    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws RemoteException {
+        guisCompetitors.add(guiA);
+    }
     
     
-    
+    //GUI TRICKS
+    private void cambio(){
+        for(IUpgradeableCompetitor gui : guisCompetitors){
+            try {
+                gui.change();
+            } catch (RemoteException ex) {
+                Logger.getLogger(ServiceCompetitor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     
     
     
