@@ -6,13 +6,15 @@
 package Vistas;
 
 import controllers.CompetitorController;
-import estructural.Competitor;
+import Models.Competitor;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -21,7 +23,7 @@ import model.IServiceCompetitor;
 public class GUIAdicionarParticipante extends javax.swing.JFrame {
 
     private IServiceCompetitor serviceCompetitor;
-    private CompetitorController competitorController;
+    private final CompetitorController competitorController;
     /**
      * Creates new form GUIAdicionarEstudiante
      */
@@ -30,6 +32,7 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
         initComponents();
         serviceCompetitor = ser;
         setLocationRelativeTo(null);
+        competitorController = new CompetitorController(ser);
     }
 
     /**
@@ -61,7 +64,8 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
             }
         });
 
-        jDateChooser1.setDateFormatString("y/MM/d");
+        jDateChooser1.setDateFormatString("yyyy-MM-dd");
+        jDateChooser1.setDoubleBuffered(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,7 +107,11 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         String apodo = txtApodo.getText().trim();
-        Date fecha = jDateChooser1.getDate();
+        
+        Date date = jDateChooser1.getDate(); //ic es la interfaz, jDate el JDatechooser
+        long d = date.getTime(); //guardamos en un long el tiempo
+        java.sql.Date fecha = new java.sql.Date(d);// parseamos al formato del sql 
+        System.out.println(fecha);
         
         try {
             Competitor participante = new Competitor( apodo, fecha);

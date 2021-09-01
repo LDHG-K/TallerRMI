@@ -5,7 +5,7 @@
  */
 package vistas;
 
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
 
 
 /**

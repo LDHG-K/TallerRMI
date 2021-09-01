@@ -5,10 +5,10 @@
  */
 package controllers;
 
-import estructural.Competitor;
+import Models.Competitor;
 import java.rmi.RemoteException;
 import java.util.List;
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
 
 /**
  *
@@ -21,6 +21,8 @@ public class CompetitorController {
     public CompetitorController (IServiceCompetitor servicio){
         this.servicio = servicio;
     }
+
+    
     
     public void agregarParticipante(Competitor participante) throws RemoteException{
         servicio.createCompetitor(participante);

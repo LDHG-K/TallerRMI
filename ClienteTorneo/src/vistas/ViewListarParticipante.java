@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import Vistas.GUIListarParticipante;
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
 
 /**
  *

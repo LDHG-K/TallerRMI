@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
 
 import vistas.GUIEditarParticipante;
 import vistas.GUIEliminarParticipante;

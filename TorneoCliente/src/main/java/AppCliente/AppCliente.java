@@ -21,10 +21,10 @@ public class AppCliente
         { 
            IServiceCompetitor obj = (IServiceCompetitor) Naming.lookup( "//" + 
                 "127.0.0.1" + "/ServidorHolaMundo");  
-               /* Competitor competitor = new Competitor(2, "apodo2", Date.valueOf("2020-10-08"), Date.valueOf("2020-10-08") );     
-                System.out.println(competitor.getApodo());
-           obj.createCompetitor(competitor);*/
-           Competitor competitor = obj.searchCompetitorById(1);
+            Competitor competitor = new Competitor(2, "apodo2", Date.valueOf("2020-10-08"), Date.valueOf("2020-10-08") );     
+            System.out.println(competitor.getApodo());
+           //obj.createCompetitor(competitor);*/
+           //Competitor competitor = obj.searchCompetitorById(1);
                 System.out.println(competitor.getApodo());
              
             

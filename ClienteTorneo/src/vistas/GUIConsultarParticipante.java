@@ -5,12 +5,12 @@
  */
 package Vistas;
 
-import estructural.Competitor;
+import Models.Competitor;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
 import vistas.IUpgradeableCompetitor;
 
 
@@ -149,8 +149,8 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
         }else{
             JOptionPane.showMessageDialog(this, "El estudiante de código " + codigo +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
             txtCodigo.setText("");
-            txtNombre.setText("");
-            txtDireccion.setText("");
+          //  txtNombre.setText("");
+          //  txtDireccion.setText("");
             txtCodigo.grabFocus();
         }
             

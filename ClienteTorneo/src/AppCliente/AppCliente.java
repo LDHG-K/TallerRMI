@@ -7,7 +7,7 @@ package AppCliente;
 
 import Vistas.GUIPrincipal;
 import java.rmi.Naming;
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
 
 /**
  *

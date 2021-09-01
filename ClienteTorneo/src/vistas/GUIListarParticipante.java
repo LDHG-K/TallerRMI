@@ -5,13 +5,13 @@
  */
 package Vistas;
 
-import estructural.Competitor;
+import Models.Competitor;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import model.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitor;
 
 import vistas.IUpgradeableCompetitor;
 

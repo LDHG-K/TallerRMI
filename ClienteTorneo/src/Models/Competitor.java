@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package estructural;
+package Models;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,7 +25,8 @@ private static final long serialVersionUID = 6529685098267757690L;
     public Competitor( String apodo, Date fechaCaducidad) {
         
         this.apodo = apodo;
-        this.fechaInscripcion = new Date();
+        long d = new Date().getTime();
+        this.fechaInscripcion = new java.sql.Date(d);
         this.fechaCaducidad = fechaCaducidad;
     }
     

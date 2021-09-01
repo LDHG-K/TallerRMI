@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Luis/Desktop/AplicacionesMVCRMI/AplicacionesMVCRMI/AplicacionesMVCRMI/Cliente/AplicacionEstudianteRMICliente/src/vistas/GUIPrincipal.java</file>
-            <file>file:/C:/Users/Luis/Desktop/AplicacionesMVCRMI/AplicacionesMVCRMI/AplicacionesMVCRMI/Cliente/AplicacionEstudianteRMICliente/src/estructural/Competitor.java</file>
-            <file>file:/C:/Users/Luis/Desktop/AplicacionesMVCRMI/AplicacionesMVCRMI/AplicacionesMVCRMI/Cliente/AplicacionEstudianteRMICliente/src/vistas/GUIListarParticipante.java</file>
-            <file>file:/C:/Users/Luis/Desktop/AplicacionesMVCRMI/AplicacionesMVCRMI/AplicacionesMVCRMI/Cliente/AplicacionEstudianteRMICliente/src/vistas/GUIEditarParticipante.java</file>
-            <file>file:/C:/Users/Luis/Desktop/AplicacionesMVCRMI/AplicacionesMVCRMI/AplicacionesMVCRMI/Cliente/AplicacionEstudianteRMICliente/src/vistas/GUIAdicionarParticipante.java</file>
-            <file>file:/C:/Users/Luis/Desktop/AplicacionesMVCRMI/AplicacionesMVCRMI/AplicacionesMVCRMI/Cliente/AplicacionEstudianteRMICliente/src/vistas/GUIConsultarParticipante.java</file>
+            <file>file:/D:/Users/luis/Desktop/TallerRMI/TallerRMI/TallerRMI/ClienteTorneo/src/vistas/GUIAdicionarParticipante.java</file>
+            <file>file:/D:/Users/luis/Desktop/TallerRMI/TallerRMI/TallerRMI/ClienteTorneo/src/controllers/CompetitorController.java</file>
+            <file>file:/D:/Users/luis/Desktop/TallerRMI/TallerRMI/TallerRMI/ClienteTorneo/src/vistas/GUIConsultarParticipante.java</file>
         </group>
     </open-files>
 </project-private>
