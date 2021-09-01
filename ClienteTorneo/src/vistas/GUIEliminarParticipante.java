@@ -153,12 +153,12 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
         
         try {
             participante = competitorController.buscarParticipante(id);
-        } catch (RemoteException ex) {
-            Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
-            
             txtApodo.setText(participante.getApodo());
             jDateChooser1.setDate(participante.getFechaInscripcion());
             jDateChooser2.setDate(participante.getFechaCaducidad());
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(this, "El Participante que busca no se encuentra en la base de datos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -173,6 +173,7 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
             try {
                 competitorController.eliminarParticipante(participante);
             } catch (RemoteException ex) {
+                
                 Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {

@@ -57,7 +57,7 @@ public class GUIListarParticipante extends javax.swing.JFrame implements IUpgrad
 
             },
             new String [] {
-                "Codigo", "Nombre", "Dirección"
+                "ID", "Apodo", "Fecha Expiracion"
             }
         ) {
             Class[] types = new Class [] {

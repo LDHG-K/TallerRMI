@@ -32,8 +32,8 @@ public class GUIGraficoMatriculadosParticipates extends javax.swing.JFrame {
         competitorController= new CompetitorController(ser);
         initComponents();
         CategoryDataset dataset = createDataset();
-        JFreeChart chart = ChartFactory.createBarChart("GRAFICA DE BARRA PARTICIPANTES POR MES"
-                + "", "MES", "NUMERO DE INSCRITOS", dataset, PlotOrientation.VERTICAL, true, true, false);
+        JFreeChart chart = ChartFactory.createBarChart("GRAFICA DE BARRA DE CADUCIDAD POR MES"
+                + "", "MES", "NUMERO DE INSCRIPCIONES VENCIDAS", dataset, PlotOrientation.VERTICAL, true, true, false);
         ChartPanel panel = new ChartPanel(chart);
         setContentPane(panel);
         
