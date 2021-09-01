@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -153,6 +154,39 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     }
     
     
+    @Override
+    public HashMap searchStatistics() {
+        
+    try {
+            String cad = "select MonthName(fecha_caducidad), count(*)\n" +
+                    "  from participante\n" +
+                    " where fecha_caducidad >= makedate(year(curdate()), 1)\n" +
+                    "   and fecha_caducidad < makedate(year(curdate()) + 1, 1)\n" +
+                    " group by MonthName(fecha_caducidad)";
+            
+            ResultSet res;
+            
+            HashMap <String, Integer> map = new HashMap <String, Integer> ();
+            
+            
+            Integer valor;
+            String llave;
+
+            res = connection.executeQueryStatement(cad);
+            while(res.next()){
+
+                llave = res.getString(1);
+                valor = Integer.parseInt(res.getString(2));
+                
+                map.put(llave, valor);
+            }
+            return map;
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error al extraer las estadisticas");
+        }    
+        
+    }
+    
     //GUI TRICKS
     private void cambio(){
         for(IUpgradeableCompetitor gui : guisCompetitors){
@@ -163,6 +197,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             }
         }
     }
+
     
     
     

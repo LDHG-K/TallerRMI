@@ -9,6 +9,7 @@ import Models.Competitor;
 import java.rmi.RemoteException;
 import java.util.List;
 import Services.Interfaces.IServiceCompetitor;
+import java.util.HashMap;
 
 /**
  *
@@ -41,4 +42,8 @@ public class CompetitorController {
     public List<Competitor> listarParticipantes()throws RemoteException{
         return servicio.searchAll();
     } 
+
+    public HashMap buscarEstadisticas() {
+       return servicio.searchStatistics();
+    }
 }
