@@ -22,7 +22,9 @@ public class CompetitorController {
         this.servicio = servicio;
     }
 
-    
+   public Competitor buscarParticipante(Long id) throws RemoteException{
+       return servicio.searchCompetitorById(id);
+   } 
     
     public void agregarParticipante(Competitor participante) throws RemoteException{
         servicio.createCompetitor(participante);

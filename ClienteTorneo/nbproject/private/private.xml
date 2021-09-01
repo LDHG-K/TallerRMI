@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Users/luis/Desktop/TallerRMI/TallerRMI/TallerRMI/ClienteTorneo/src/vistas/GUIAdicionarParticipante.java</file>
-            <file>file:/D:/Users/luis/Desktop/TallerRMI/TallerRMI/TallerRMI/ClienteTorneo/src/controllers/CompetitorController.java</file>
-            <file>file:/D:/Users/luis/Desktop/TallerRMI/TallerRMI/TallerRMI/ClienteTorneo/src/vistas/GUIConsultarParticipante.java</file>
+            <file>file:/C:/Users/Luis/Desktop/Proyectos%20de%20Arquitectura/Primer%20proyecto/TallerRMI/ClienteTorneo/src/vistas/GUIEliminarParticipante.java</file>
+            <file>file:/C:/Users/Luis/Desktop/Proyectos%20de%20Arquitectura/Primer%20proyecto/TallerRMI/ClienteTorneo/src/vistas/GUIAdicionarParticipante.java</file>
+            <file>file:/C:/Users/Luis/Desktop/Proyectos%20de%20Arquitectura/Primer%20proyecto/TallerRMI/ClienteTorneo/src/controllers/CompetitorController.java</file>
+            <file>file:/C:/Users/Luis/Desktop/Proyectos%20de%20Arquitectura/Primer%20proyecto/TallerRMI/ClienteTorneo/src/vistas/GUIConsultarParticipante.java</file>
         </group>
     </open-files>
 </project-private>

@@ -5,7 +5,14 @@
  */
 package vistas;
 
+import Models.Competitor;
 import Services.Interfaces.IServiceCompetitor;
+import controllers.CompetitorController;
+import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -15,13 +22,17 @@ import Services.Interfaces.IServiceCompetitor;
 public class GUIEditarParticipante extends javax.swing.JFrame {
 
    private IServiceCompetitor servicioCompetidor;
-    /**
+   private CompetitorController competitorController;
+   private Competitor participante;
+   
+   /**
      * Creates new form GUIEditarParticipante
      */
     public GUIEditarParticipante(IServiceCompetitor ser) {
         initComponents();
         servicioCompetidor = ser;
         setLocationRelativeTo(null);
+        competitorController = new CompetitorController(ser);
     }
 
     /**
@@ -135,33 +146,54 @@ public class GUIEditarParticipante extends javax.swing.JFrame {
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
         
-        String apodo;
-        String nombre;
-        String direccion;
-        //Competitor com = null;
-
-        apodo = txtApodo.getText();
-        //nombre = txtFechaIngreso.getText().trim();
-        //direccion = txtFechaCadu.getText().trim();
-        /*
-        est = new Competitor(codigo, nombre, direccion);
-
-        try {
-            serviceCompetitor.addEstudiante(est);
-        } catch (RemoteException ex) {
-            Logger.getLogger(GUIAdicionarParticipante.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-        //JOptionPane.showMessageDialog(this, "El estudiante ha sido adicionado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-
-        txtApodo.setText("");
-        //txtFechaIngreso.setText("");
-        //txtFechaCadu.setText("");
+        String apodo = txtApodo.getText();
+        
+        Date fechaInscripcion = jDateChooser1.getDate(); //ic es la interfaz, jDate el JDatechooser
+        long d = fechaInscripcion.getTime(); //guardamos en un long el tiempo
+        java.sql.Date fecha1 = new java.sql.Date(d);// parseamos al formato del sql
+        
+        Date fechaExpiracion = jDateChooser2.getDate(); //ic es la interfaz, jDate el JDatechooser
+        long e = fechaExpiracion.getTime(); //guardamos en un long el tiempo
+        java.sql.Date fecha2 = new java.sql.Date(e);// parseamos al formato del sql
+        
+        
+       try {
+           competitorController.agregarParticipante(new Competitor(Long.parseLong(txtApodo.getText()),apodo,fecha1,fecha2));
+       } catch (RemoteException ex) {
+           Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        
+        JOptionPane.showMessageDialog(this, "El competidor ha sido adicionado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+       
+       txtApodo.setText("");
+       txtApodo.setEnabled(false);
+       
+       jDateChooser1.setDate(null);
+       jDateChooser1.setEnabled(false);
+       jDateChooser2.setDate(null);
+       jDateChooser2.setEnabled(false);
+       txtID.setEnabled(true);
         txtApodo.grabFocus();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnAdicionar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionar1ActionPerformed
-        // TODO add your handling code here:
+         Long id = Long.parseLong(txtID.getText());
+       try {
+           participante = competitorController.buscarParticipante(id);
+       } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(this, "El participante no fue encontrado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+       
+           Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       
+       txtApodo.setText(participante.getApodo());
+       txtApodo.setEnabled(true);
+       
+       jDateChooser1.setDate(participante.getFechaInscripcion());
+       jDateChooser1.setEnabled(true);
+       jDateChooser2.setDate(participante.getFechaCaducidad());
+       jDateChooser2.setEnabled(true);
+       txtID.setEnabled(false);
     }//GEN-LAST:event_btnAdicionar1ActionPerformed
 
     
