@@ -31,6 +31,6 @@ public interface IServiceCompetitor extends Remote {
     
     public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws RemoteException;
     
-    public HashMap searchStatistics();
+    public HashMap<String,Integer> searchStatistics();
 
 }

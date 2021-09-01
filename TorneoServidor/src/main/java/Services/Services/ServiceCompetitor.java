@@ -155,7 +155,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     
     
     @Override
-    public HashMap searchStatistics() {
+    public HashMap<String,Integer> searchStatistics() {
         
     try {
             String cad = "select MonthName(fecha_caducidad), count(*)\n" +
