@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Services.Interfaces.IServiceCompetitor;
+import controllers.CompetitorController;
 import vistas.IUpgradeableCompetitor;
 
 
@@ -21,7 +22,8 @@ import vistas.IUpgradeableCompetitor;
 public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpgradeableCompetitor{
 
     private IServiceCompetitor servicioCompetidor;
-    
+    private CompetitorController competitorController;
+    private Competitor participante;
     /**
      * Creates new form GUIConsultarEstudiante
      */
@@ -29,6 +31,7 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
         initComponents();
         servicioCompetidor = ser;
         setLocationRelativeTo(null);
+        competitorController = new CompetitorController (ser);
     }
 
     /**
@@ -66,7 +69,13 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
 
         jLabel3.setText("Fecha Caducidad:");
 
+        txtApodo.setEditable(false);
+
         jLabel4.setText("Apodo: ");
+
+        jDateChooser1.setEnabled(false);
+
+        jDateChooser2.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,31 +138,19 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        int codigo;
-        String nombre;
-        String direccion;
-        Competitor est = null;
+        Long id = Long.parseLong(txtCodigo.getText());
         
-        codigo = Integer.parseInt(txtCodigo.getText());
-        /*
         try {
-            est = servicioCompetidor.getEstudiante(codigo);
+            participante = competitorController.buscarParticipante(id);
+            txtApodo.setText(participante.getApodo());
+            jDateChooser1.setDate(participante.getFechaInscripcion());
+            jDateChooser2.setDate(participante.getFechaCaducidad());
         } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(this, "El participante de código " + id +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            txtCodigo.setText("");
+            txtCodigo.grabFocus();    
             Logger.getLogger(GUIConsultarParticipante.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
-        if(est != null){
-           // txtCodigo.setText(String.valueOf(est.getCodigo()));
-            //txtNombre.setText(est.getNombre());
-            //txtDireccion.setText(est.getDireccion());
-        }else{
-            JOptionPane.showMessageDialog(this, "El estudiante de código " + codigo +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
-            txtCodigo.setText("");
-          //  txtNombre.setText("");
-          //  txtDireccion.setText("");
-            txtCodigo.grabFocus();
-        }
-            
         
     }//GEN-LAST:event_btnConsultarActionPerformed
 
