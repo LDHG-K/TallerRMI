@@ -26,6 +26,7 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
      * Creates new form GUIAdicionarEstudiante
      */
     public GUIAdicionarParticipante(IServiceCompetitor ser) {
+        
         initComponents();
         serviceCompetitor = ser;
         setLocationRelativeTo(null);
@@ -103,39 +104,20 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
-        String apodo = txtApodo.getText();
+        String apodo = txtApodo.getText().trim();
         Date fecha = jDateChooser1.getDate();
-        
-        
         
         try {
             Competitor participante = new Competitor( apodo, fecha);
             competitorController.agregarParticipante(participante);
-        } catch (Exception e) {
-        }
-        
-        
-        String nombre;
-        String direccion;
-        Competitor com = null;
-        
-        apodo = txtApodo.getText();
-        //nombre = txtNombre.getText().trim();
-        //direccion = txtDireccion.getText().trim();
-        /*
-        est = new Competitor(codigo, nombre, direccion);
-        
-        try {
-            serviceCompetitor.addEstudiante(est);
-        } catch (RemoteException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(GUIAdicionarParticipante.class.getName()).log(Level.SEVERE, null, ex);
         }
-        */
-        JOptionPane.showMessageDialog(this, "El estudiante ha sido adicionado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        
+        JOptionPane.showMessageDialog(this, "El Participante ha sido adicionado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         
         txtApodo.setText("");
-        //txtNombre.setText("");
-        //txtDireccion.setText("");
+        jDateChooser1.setCalendar(null);
         txtApodo.grabFocus();
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
