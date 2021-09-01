@@ -9,24 +9,32 @@ import java.io.Serializable;
 //import java.time.LocalDate;
 //import java.util.Date;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
  * @author Luis
  */
 public class Competitor implements Serializable{
-
-    private static final long serialVersionUID = 6529685098267757690L;
+    
+private static final long serialVersionUID = 6529685098267757690L;
     
     private long id;
     private String apodo;
-    private Date fechaInscripcion;
-    private Date fechaCaducidad;
+    private java.sql.Date fechaInscripcion;
+    private java.sql.Date fechaCaducidad;
 
-    public Competitor(long id, String apodo, Date fechaInscripcion, Date fechaCaducidad) {
+    public Competitor(long id, String apodo, java.sql.Date fechaCaducidad) {
         this.id = id;
         this.apodo = apodo;
-        this.fechaInscripcion = fechaInscripcion;
+        this.fechaInscripcion = Date.valueOf(LocalDate.now());
+        this.fechaCaducidad = fechaCaducidad;
+    }
+    
+    public Competitor(long id, String apodo,java.sql.Date fechaDeInscripcion, java.sql.Date fechaCaducidad) {
+        this.id = id;
+        this.apodo = apodo;
+        this.fechaInscripcion = fechaDeInscripcion;
         this.fechaCaducidad = fechaCaducidad;
     }
 
@@ -46,22 +54,26 @@ public class Competitor implements Serializable{
         this.apodo = apodo;
     }
 
-    public Date getFechaInscripcion() {
+    public java.sql.Date getFechaInscripcion() {
         return fechaInscripcion;
     }
 
-    public void setFechaInscripcion(Date fechaInscripcion) {
+    public void setFechaInscripcion(java.sql.Date fechaInscripcion) {
         this.fechaInscripcion = fechaInscripcion;
     }
 
-    public Date getFechaCaducidad() {
+    public java.sql.Date getFechaCaducidad() {
         return fechaCaducidad;
     }
 
-    public void setFechaCaducidad(Date fechaCaducidad) {
+    public void setFechaCaducidad(java.sql.Date fechaCaducidad) {
         this.fechaCaducidad = fechaCaducidad;
     }
 
     
-    
+    public void verficarInvariante(){
+        assert apodo == null && !apodo.equals("") : "El participante debe tener un apodo";
+        assert id>0 : "id debe ser mayor a 0";
+        assert fechaCaducidad.after(Date.valueOf(LocalDate.now())) : "No se puede añadir una fecha de caducidad atrazada";
+    }
 }

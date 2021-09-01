@@ -34,5 +34,7 @@ public class CompetitorController {
         servicio.deleteCompetitor(participante.getId());
     }
     
-    
+    public List<Competitor> listarParticipantes()throws RemoteException{
+        return servicio.searchAll();
+    } 
 }
