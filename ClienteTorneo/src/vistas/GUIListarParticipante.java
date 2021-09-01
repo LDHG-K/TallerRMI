@@ -14,7 +14,7 @@ import Services.Interfaces.IServiceCompetitor;
 import controllers.CompetitorController;
 import java.util.List;
 
-import vistas.IUpgradeableCompetitor;
+import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 
 /**

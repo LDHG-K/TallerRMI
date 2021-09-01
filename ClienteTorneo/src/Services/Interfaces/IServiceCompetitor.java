@@ -11,7 +11,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.List;
-import vistas.IUpgradeableCompetitor;
+import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 /**
  *

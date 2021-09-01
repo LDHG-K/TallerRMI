@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import Services.Interfaces.IServiceCompetitor;
 import controllers.CompetitorController;
-import vistas.IUpgradeableCompetitor;
+import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 
 /**
