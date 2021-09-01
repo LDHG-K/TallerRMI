@@ -43,7 +43,7 @@ public class CompetitorController {
         return servicio.searchAll();
     } 
 
-    public HashMap buscarEstadisticas() {
+    public HashMap buscarEstadisticas() throws RemoteException{
        return servicio.searchStatistics();
     }
 }
