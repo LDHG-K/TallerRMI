@@ -28,7 +28,7 @@ public class ConnectionDB {
         }
 
         public ConnectionDB() {
-            this("root","akira");
+            this("root","");
         }
 
         //Metodo para conectarce a una base de datos

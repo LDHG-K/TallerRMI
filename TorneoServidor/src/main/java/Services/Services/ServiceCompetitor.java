@@ -47,16 +47,18 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         Competitor searched = null;
         
         try {
+           
             res = connection.executeQueryStatement(cad);
             while(res.next()){
                 
                 searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
 
-                
+                  
                         
             }
         } catch (SQLException ex) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+           
+             searched=null;
         }
         
         return searched;
