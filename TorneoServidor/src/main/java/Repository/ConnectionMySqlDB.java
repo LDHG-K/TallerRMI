@@ -12,7 +12,7 @@ import java.sql.*;
  *
  * @author Luis
  */
-public class ConnectionDB {
+public class ConnectionMySqlDB {
     private Connection con;
         private String user;
         private String password;
@@ -20,14 +20,14 @@ public class ConnectionDB {
         private String url;
         private String nombreBD;
 
-        public ConnectionDB( String us, String pass){
+        public ConnectionMySqlDB( String us, String pass){
            user = us;
            password = pass;
            nombreBD  = "taller_rmi_db";
            conectar();
         }
 
-        public ConnectionDB() {
+        public ConnectionMySqlDB() {
             this("root","");
         }
 

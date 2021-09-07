@@ -184,6 +184,8 @@ public class GUIEditarParticipante extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "El participante no fue encontrado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
        
            Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+       } catch (Exception ex) {
+           Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
        }
        
        txtApodo.setText(participante.getApodo());

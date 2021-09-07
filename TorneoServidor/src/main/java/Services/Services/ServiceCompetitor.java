@@ -7,7 +7,7 @@ package Services.Services;
 
 
 import Models.Competitor;
-import Repository.ConnectionDB;
+import Repository.ConnectionMySqlDB;
 import Services.Interfaces.IServiceCompetitor;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 import java.rmi.RemoteException;
@@ -31,9 +31,9 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
      private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     
     
-    private ConnectionDB connection;
+    private ConnectionMySqlDB connection;
     
-    public ServiceCompetitor(ConnectionDB connection)throws RemoteException{
+    public ServiceCompetitor(ConnectionMySqlDB connection)throws RemoteException{
        guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connection = connection;
     }

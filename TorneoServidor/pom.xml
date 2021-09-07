@@ -12,11 +12,19 @@
     </properties>
 
 
-    <dependencies>
-        <dependency>
+   <dependencies> 
+   
+       <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.26</version>
         </dependency>
-    </dependencies>
+        
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+            <version>12.1.0.2</version>
+        </dependency>
+   
+   </dependencies>
 </project>

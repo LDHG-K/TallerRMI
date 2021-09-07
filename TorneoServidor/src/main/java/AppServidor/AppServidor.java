@@ -5,7 +5,7 @@
  */
 package AppServidor;
 
-import Repository.ConnectionDB;
+import Repository.ConnectionMySqlDB;
 import Services.Services.ServiceCompetitor;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -22,7 +22,7 @@ public class AppServidor {
         try 
         { 
             //ServicioHola model = new ServicioHola();
-            ConnectionDB connection = new ConnectionDB(); 
+            ConnectionMySqlDB connection = new ConnectionMySqlDB(); 
             Services.Services.ServiceCompetitor model = new ServiceCompetitor(connection);
             LocateRegistry.createRegistry(1099);
             Naming.rebind("//192.168.16.13/ServidorGrupo4", model);
