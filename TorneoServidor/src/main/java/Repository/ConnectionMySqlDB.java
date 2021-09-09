@@ -23,12 +23,12 @@ public class ConnectionMySqlDB {
         public ConnectionMySqlDB( String us, String pass){
            user = us;
            password = pass;
-           nombreBD  = "taller_rmi_db";
+           nombreBD  = "AKIRA";
            conectar();
         }
 
         public ConnectionMySqlDB() {
-            this("root","");
+            this("root","root");
         }
 
         //Metodo para conectarce a una base de datos
@@ -47,7 +47,7 @@ public class ConnectionMySqlDB {
                 con = DriverManager.getConnection(url,user,password);
 
                 con.setAutoCommit(true);
-                System.out.println("Conexion exitosa...");
+                System.out.println("Conexion exitosa base de datos MySql...");
             }catch(Exception e){
                 System.out.println("Error al conectarce: "+e);
             }

@@ -6,6 +6,8 @@
 package AppServidor;
 
 import Repository.ConnectionMySqlDB;
+import Repository.ConnectionOracleDB;
+import Services.Interfaces.IServiceCompetitor;
 import Services.Services.ServiceCompetitor;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -21,11 +23,13 @@ public class AppServidor {
         
         try 
         { 
-            //ServicioHola model = new ServicioHola();
-            ConnectionMySqlDB connection = new ConnectionMySqlDB(); 
-            Services.Services.ServiceCompetitor model = new ServiceCompetitor(connection);
+            ConnectionMySqlDB connectionMySql = new ConnectionMySqlDB();
+            ConnectionOracleDB connectionOracle = new ConnectionOracleDB();
+            //Services.Services.ServiceCompetitor model = new ServiceCompetitor(connection);
+            IServiceCompetitor model = new ServiceCompetitor(connectionMySql,connectionOracle);
             LocateRegistry.createRegistry(1099);
-            Naming.rebind("//192.168.16.13/ServidorGrupo4", model);
+            //Naming.rebind("//192.168.16.13/ServidorGrupo4", model); //Tristancho Server Sala
+            Naming.rebind("//127.0.0.1/ServidorGrupo4", model); //Trabajo local
             System.out.println("Servidor operando");
         } 
         catch (Exception e) 

@@ -32,7 +32,7 @@ public class ConnectionOracleDB {
         }
 
         public ConnectionOracleDB() {
-            this("USER","PASSWORD");
+            this("PROYECTO","PROYECTO");
         }
 
         //Metodo para conectarce a una base de datos
@@ -51,7 +51,7 @@ public class ConnectionOracleDB {
                 con = DriverManager.getConnection(url,user,password);
 
                 con.setAutoCommit(true);
-                System.out.println("Conexion exitosa...");
+                System.out.println("Conexion exitosa base de datos Oracle...");
             }catch(Exception e){
                 System.out.println("Error al conectarce: "+e);
             }

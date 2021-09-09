@@ -8,6 +8,7 @@ package Services.Services;
 
 import Models.Competitor;
 import Repository.ConnectionMySqlDB;
+import Repository.ConnectionOracleDB;
 import Services.Interfaces.IServiceCompetitor;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 import java.rmi.RemoteException;
@@ -31,11 +32,13 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
      private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     
     
-    private ConnectionMySqlDB connection;
+    private ConnectionMySqlDB connectionMySql;
+    private ConnectionOracleDB connectionOracle;
     
-    public ServiceCompetitor(ConnectionMySqlDB connection)throws RemoteException{
+    public ServiceCompetitor(ConnectionMySqlDB connection, ConnectionOracleDB connection2)throws RemoteException{
        guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
-        this.connection = connection;
+        this.connectionMySql = connection;
+        this.connectionOracle = connection2;
     }
     
     
@@ -48,7 +51,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         
         try {
            
-            res = connection.executeQueryStatement(cad);
+            res = connectionMySql.executeQueryStatement(cad);
             while(res.next()){
                 
                 searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
@@ -73,7 +76,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                 "', fecha_caducidad ='"+competitor.getFechaCaducidad()+
                 "' WHERE id = "+competitor.getId();
         try {
-            if (!connection.executeUpdateStatement(cad)) {
+            if (!connectionMySql.executeUpdateStatement(cad)) {
                 throw new Exception("Operacion no ejecutada");
             }
         } catch (Exception e) {
@@ -89,7 +92,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         
         String cad = "DELETE FROM participante WHERE id="+id;
         try {
-            if (!connection.executeUpdateStatement(cad)) {
+            if (!connectionMySql.executeUpdateStatement(cad)) {
                 throw new Exception("Operacion no ejecutada");
             }
         } catch (Exception e) {
@@ -110,7 +113,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         
 
         try {
-            if (!connection.executeUpdateStatement(cad)) {
+            if (!connectionMySql.executeUpdateStatement(cad)) {
                 throw new Exception("Operacion no ejecutada");
             }
         } catch (Exception e) {
@@ -132,7 +135,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             Date fechaInscripcion;
             Date fechaCaducidad;
 
-            res = connection.executeQueryStatement(cad);
+            res = connectionMySql.executeQueryStatement(cad);
             while(res.next()){
 
                 id = Integer.parseInt(res.getString(1));
@@ -174,7 +177,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             Integer valor;
             String llave;
 
-            res = connection.executeQueryStatement(cad);
+            res = connectionMySql.executeQueryStatement(cad);
             while(res.next()){
 
                 llave = res.getString(1);
