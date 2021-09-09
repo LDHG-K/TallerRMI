@@ -117,7 +117,7 @@ public class GUIAdicionarParticipante extends javax.swing.JFrame {
             Competitor participante = new Competitor( apodo, fecha);
             competitorController.agregarParticipante(participante);
         } catch (Exception ex) {
-            Logger.getLogger(GUIAdicionarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+            // aqui entra por la mk fecha
         }
         
         JOptionPane.showMessageDialog(this, "El Participante ha sido adicionado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);

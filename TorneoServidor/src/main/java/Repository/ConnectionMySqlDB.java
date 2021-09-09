@@ -46,7 +46,7 @@ public class ConnectionMySqlDB {
                 url="jdbc:mysql://localhost:3306/"+nombreBD;
                 con = DriverManager.getConnection(url,user,password);
 
-                con.setAutoCommit(true);
+                con.setAutoCommit(false);
                 System.out.println("Conexion exitosa base de datos MySql...");
             }catch(Exception e){
                 System.out.println("Error al conectarce: "+e);
@@ -96,5 +96,18 @@ public class ConnectionMySqlDB {
                 System.out.println("Problemas con la invocacion del procedimiento " + cadProc);
             }
         }
+ 
+        public void devolver(){
+            try {
+                con.rollback();
+            } catch (Exception e) {
+            }
+        }
         
+        public void aceptar(){
+            try {
+                con.commit();
+            } catch (Exception e) {
+            }
+        }
 }

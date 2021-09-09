@@ -19,7 +19,9 @@ public class AppCliente {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String rmiRegistryHost = "192.168.16.13";
+        
+        //String rmiRegistryHost = "192.168.16.13"; //Servidor Tristancho
+        String rmiRegistryHost = "127.0.0.1";
      	try {
             if (args.length > 0) {
                 rmiRegistryHost = args[0];

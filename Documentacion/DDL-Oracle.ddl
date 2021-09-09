@@ -12,3 +12,11 @@ ALTER TABLE Partidos ADD CONSTRAINT FKPartidos557788 FOREIGN KEY (parcipante_2) 
 CREATE SEQUENCE seq_Participantes;
 CREATE SEQUENCE seq_Mesas;
 CREATE SEQUENCE seq_Partidos;
+
+
+
+
+
+
+RESETEAR SECUENCIAS
+ALTER SEQUENCE [schema].[sequencename] RESTART WITH [new value]; 

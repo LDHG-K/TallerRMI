@@ -50,7 +50,7 @@ public class ConnectionOracleDB {
                 url="jdbc:oracle:thin:@localhost:1521:"+nombreBD;
                 con = DriverManager.getConnection(url,user,password);
 
-                con.setAutoCommit(true);
+                con.setAutoCommit(false);
                 System.out.println("Conexion exitosa base de datos Oracle...");
             }catch(Exception e){
                 System.out.println("Error al conectarce: "+e);
@@ -85,6 +85,7 @@ public class ConnectionOracleDB {
                 stmt.close();
                 return true;
             }catch(Exception ex){
+                ex.printStackTrace();
                 //System.out.println("No se pudo efectuar la grabacion..." + ex);
                 return false;
             }
@@ -101,8 +102,20 @@ public class ConnectionOracleDB {
                 System.out.println("Problemas con la invocacion del procedimiento " + cadProc);
             }
         }
+        
+        public void devolver(){
+            try {
+                con.rollback();
+            } catch (Exception e) {
+            }
+        }
 
-
+        public void aceptar(){
+            try {
+                con.commit();
+            } catch (Exception e) {
+            }
+        }
         
 
         //Objeto que cierra la conexion con la base de datos.

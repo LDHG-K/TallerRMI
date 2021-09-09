@@ -11,6 +11,7 @@ import Repository.ConnectionMySqlDB;
 import Repository.ConnectionOracleDB;
 import Services.Interfaces.IServiceCompetitor;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
+import com.mysql.cj.util.Util;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
@@ -47,21 +48,28 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         
         String cad = "SELECT * FROM participante WHERE id ="+id;
         ResultSet res = null;
+        ResultSet res2 = null;
         Competitor searched = null;
+        Competitor searched2 = null;
         
         try {
            
             res = connectionMySql.executeQueryStatement(cad);
+            res2 = connectionOracle.executeQueryStatement(cad);
+            
             while(res.next()){
-                
                 searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
-
-                  
-                        
+                searched2 = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
+            }
+            
+            if(!searched.equals(searched2)){
+                throw new Exception("Los items guardados no coinciden");
             }
         } catch (SQLException ex) {
            
              searched=null;
+        } catch (Exception ex) {
+            System.out.println("elementos encontrados pero no coinciden");
         }
         
         return searched;
@@ -109,17 +117,31 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                                                 + competitor.getApodo()+"','"
                                                 + competitor.getFechaInscripcion()+"','"
                                                 + competitor.getFechaCaducidad()+ "')";
-
-        
+        String cad2 = "INSERT INTO participantes VALUES(seq_Participantes.nextval,'"
+                                                + competitor.getApodo()+"',TO_DATE('"                                           
+                                                + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD'),TO_DATE('"
+                                                + competitor.getFechaCaducidad().toString()+ "','YYYY-MM-DD'))";
 
         try {
             if (!connectionMySql.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada");
+                throw new Exception("Operacion no ejecutada en MySQL");
             }
+            
+         
+            if (!connectionOracle.executeUpdateStatement(cad2)) {
+                throw new Exception("Operacion no ejecutada en ORACLE");
+               }
         } catch (Exception e) {
+            
+            connectionMySql.devolver();
+            connectionOracle.devolver();
+            
             System.out.println(e.getMessage());
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            e.printStackTrace();
         }
+            connectionMySql.aceptar();
+            connectionOracle.aceptar();
+        
     }
 
     @Override
