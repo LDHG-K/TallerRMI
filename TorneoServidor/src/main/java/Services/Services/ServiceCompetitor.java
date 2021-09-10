@@ -113,7 +113,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     public void createCompetitor(Competitor competitor)throws RemoteException {
         
         
-        String cad = "INSERT INTO participante VALUES("+  competitor.getId()   +",'"
+        String cad = "INSERT INTO participante VALUES((SELECT Id FROM participante t ORDER BY t.Id DESC LIMIT 1)+1,'"
                                                 + competitor.getApodo()+"','"
                                                 + competitor.getFechaInscripcion()+"','"
                                                 + competitor.getFechaCaducidad()+ "')";
@@ -135,6 +135,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             
             connectionMySql.devolver();
             connectionOracle.devolver();
+            connectionOracle.restablecerSecuencia("SEQ_PARTICIPANTES");
             
             System.out.println(e.getMessage());
             e.printStackTrace();

@@ -117,6 +117,15 @@ public class ConnectionOracleDB {
             }
         }
         
+        
+        public void restablecerSecuencia(String nombreSecuencia){
+            
+            executeUpdateStatement("ALTER SEQUENCE "+nombreSecuencia+" increment by -1;");
+            executeUpdateStatement("SELECT "+nombreSecuencia+".nextval increment FROM DUAL;");
+            executeUpdateStatement("ALTER SEQUENCE "+nombreSecuencia+" increment by 1;");
+
+        }
+        
 
         //Objeto que cierra la conexion con la base de datos.
         public void closeConecction(){
@@ -128,6 +137,8 @@ public class ConnectionOracleDB {
                 System.out.println("Error! " + e);
             }
         }
+        
+        
 
 
         public void setCon(Connection con) {

@@ -96,6 +96,11 @@ public class ConnectionMySqlDB {
                 System.out.println("Problemas con la invocacion del procedimiento " + cadProc);
             }
         }
+        
+        public void restablecerSecuencia(String nombre){
+            
+        }
+        
  
         public void devolver(){
             try {
