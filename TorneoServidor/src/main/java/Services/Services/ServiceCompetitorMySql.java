@@ -8,12 +8,9 @@ package Services.Services;
 
 import Models.Competitor;
 import Repository.ConnectionMySqlDB;
-import Services.Interfaces.IServiceCompetitorMySql;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
-
-
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,53 +20,48 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  *
  * @author Luis
  */
-public class ServiceCompetitorMySql  extends UnicastRemoteObject implements IServiceCompetitorMySql{
+public class ServiceCompetitorMySql{
 
-     private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     
-    
+    private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     private ConnectionMySqlDB connectionMySql;
     
-    public ServiceCompetitorMySql(ConnectionMySqlDB connection)throws RemoteException{
-       guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
+    
+    public ServiceCompetitorMySql(ConnectionMySqlDB connection){
+        guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connectionMySql = connection;
     }
     
     
-    @Override
-    public Competitor searchCompetitorById(long id) throws RemoteException{
+    public Competitor searchCompetitorById(long id){
         
         String cad = "SELECT * FROM participante WHERE id ="+id;
         ResultSet res = null;
         Competitor searched = null;
         
         try {
-           
             res = connectionMySql.executeQueryStatement(cad);   
-
-            while(res.next()){
-
+            while(res.next())
+            {
                 searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
-
             }
-         
         } catch (SQLException ex) {
-           
-             searched=null;
-        } catch (Exception ex) {
-            System.out.println("elementos encontrados pero no coinciden");
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             ex.printStackTrace();
+             System.out.println("======================================");
         }
-        
+
         return searched;
-        
     }
 
-    @Override
-    public void updateCompetitor(Competitor competitor)throws RemoteException {
+
+    public void updateCompetitor(Competitor competitor) {
         
         String cad = "UPDATE participante SET apodo ='"+competitor.getApodo()+
                 "', fecha_inscripcion ='" + competitor.getFechaInscripcion()+
@@ -77,32 +69,38 @@ public class ServiceCompetitorMySql  extends UnicastRemoteObject implements ISer
                 "' WHERE id = "+competitor.getId();
         try {
             if (!connectionMySql.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada");
+                throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             e.printStackTrace();
+             System.out.println("======================================");
+            
         }
         
     }
 
-    @Override
-    public void deleteCompetitor(long id)throws RemoteException {
-        
+
+    public void deleteCompetitor(long id){
         
         String cad = "DELETE FROM participante WHERE id="+id;
+        
         try {
-            if (!connectionMySql.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada");
+            if (!connectionMySql.executeUpdateStatement(cad)) 
+            {
+                throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             e.printStackTrace();
+             System.out.println("======================================");
         }
     }
 
-    @Override
-    public void createCompetitor(Competitor competitor)throws RemoteException {
+
+    public void createCompetitor(Competitor competitor) {
         
         
         String cad = "INSERT INTO participante VALUES((SELECT Id FROM participante t ORDER BY t.Id DESC LIMIT 1)+1,'"
@@ -112,21 +110,21 @@ public class ServiceCompetitorMySql  extends UnicastRemoteObject implements ISer
 
         try {
             if (!connectionMySql.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada en MySQL");
+                throw new Exception();
             }
             
         } catch (Exception e) {
-            
-            connectionMySql.devolver();     
-            System.out.println(e.getMessage());
+            System.out.println("======================================");    
+            System.out.println("Error procedimiento, Detalles:");
             e.printStackTrace();
+            System.out.println("======================================");
         }
             connectionMySql.aceptar();
         
     }
 
-    @Override
-    public List<Competitor> searchAll() throws RemoteException {
+
+    public List<Competitor> searchAll() {
         
         try {
             String cad = "SELECT * FROM participante";
@@ -150,19 +148,23 @@ public class ServiceCompetitorMySql  extends UnicastRemoteObject implements ISer
                               
             }
             return competitors;
+            
         } catch (SQLException ex) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             ex.printStackTrace();
+             System.out.println("======================================");
         }
-        
+        return null;
     }
 
-    @Override
-    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws RemoteException {
+ 
+    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA){
         guisCompetitors.add(guiA);
     }
     
     
-    @Override
+
     public HashMap<String,Integer> searchStatistics() {
         
     try {
@@ -194,6 +196,16 @@ public class ServiceCompetitorMySql  extends UnicastRemoteObject implements ISer
         }    
         
     }
+    
+    
+    public void commit(){
+        connectionMySql.aceptar();
+    }
+    
+    public void rollBack(){
+        connectionMySql.devolver();
+    }
+    
     
     //GUI TRICKS
     private void cambio(){

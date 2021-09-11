@@ -10,17 +10,14 @@ import Models.Competitor;
 import Repository.ConnectionMySqlDB;
 import Repository.ConnectionOracleDB;
 import Services.Interfaces.IServiceCompetitor;
-import Services.Interfaces.IServiceCompetitorMySql;
-import Services.Interfaces.IServiceCompetitorOracle;
+
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 
-import com.mysql.cj.util.Util;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -36,38 +33,25 @@ import java.util.logging.Logger;
 public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceCompetitor{
 
      private ArrayList<IUpgradeableCompetitor> guisCompetitors;
-    
-    
-    private ConnectionMySqlDB connectionMySql;
-    
-    private ConnectionOracleDB connectionOracle;
-    
-    IServiceCompetitorMySql mysql;
-    IServiceCompetitorOracle oracle ;
+    private ServiceCompetitorMySql mysql;
+    private ServiceCompetitorOracle oracle ;
 
     
     
-    public ServiceCompetitor(ConnectionMySqlDB connection, ConnectionOracleDB connection2)throws RemoteException{
-       guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
-        this.connectionMySql = connection;
-        this.connectionOracle = connection2;
-        this.mysql = new ServiceCompetitorMySql(connection);
-        this.oracle = new ServiceCompetitorOracle(connection2);
+    public ServiceCompetitor(ServiceCompetitorMySql mysql, ServiceCompetitorOracle oracle)throws RemoteException{
+        guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
+        
+        this.mysql = mysql;
+        this.oracle = oracle;
+        
     }
-    public ConnectionMySqlDB getConnectionMySql() {
-        return connectionMySql;
-    }
-
-    public ConnectionOracleDB getConnectionOracle() {
-        return connectionOracle;
-    }
-
     
     
-    
+    // Hacer tristancho
     @Override
     public Competitor searchCompetitorById(long id) throws RemoteException{
              
+        /*
         Competitor searched = null;
      
         try {
@@ -108,13 +92,15 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         }
         
         return searched;
-        
+        */
+        return null;
     }
 
+    // Hacer actualizar;
     @Override
     public void updateCompetitor(Competitor competitor)throws RemoteException {
         
-        String cad = "UPDATE participante SET apodo ='"+competitor.getApodo()+
+       /* String cad = "UPDATE participante SET apodo ='"+competitor.getApodo()+
                 "', fecha_inscripcion ='" + competitor.getFechaInscripcion()+
                 "', fecha_caducidad ='"+competitor.getFechaCaducidad()+
                 "' WHERE id = "+competitor.getId();
@@ -126,13 +112,14 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             System.out.println(e.getMessage());
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
-        
+        */
     }
 
+    // Hacer Brayan
     @Override
     public void deleteCompetitor(long id)throws RemoteException {
         
-        
+        /*
         String cad = "DELETE FROM participante WHERE id="+id;
         try {
             if (!connectionMySql.executeUpdateStatement(cad)) {
@@ -142,6 +129,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             System.out.println(e.getMessage());
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+        */
     }
 
     @Override
