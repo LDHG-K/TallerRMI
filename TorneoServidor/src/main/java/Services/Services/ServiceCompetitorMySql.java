@@ -8,20 +8,16 @@ package Services.Services;
 
 import Models.Competitor;
 import Repository.ConnectionMySqlDB;
-import Repository.ConnectionOracleDB;
-import Services.Interfaces.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitorMySql;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 
-import com.mysql.cj.util.Util;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -31,7 +27,7 @@ import java.util.logging.Logger;
  *
  * @author Luis
  */
-public class ServiceCompetitorMySql  extends UnicastRemoteObject implements IServiceCompetitor{
+public class ServiceCompetitorMySql  extends UnicastRemoteObject implements IServiceCompetitorMySql{
 
      private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     
@@ -49,9 +45,7 @@ public class ServiceCompetitorMySql  extends UnicastRemoteObject implements ISer
         
         String cad = "SELECT * FROM participante WHERE id ="+id;
         ResultSet res = null;
-        ResultSet res2 = null;
         Competitor searched = null;
-        Competitor searched2 = null;
         
         try {
            

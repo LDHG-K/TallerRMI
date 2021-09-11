@@ -10,6 +10,8 @@ import Models.Competitor;
 import Repository.ConnectionMySqlDB;
 import Repository.ConnectionOracleDB;
 import Services.Interfaces.IServiceCompetitor;
+import Services.Interfaces.IServiceCompetitorMySql;
+import Services.Interfaces.IServiceCompetitorOracle;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 
@@ -37,53 +39,64 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     
     
     private ConnectionMySqlDB connectionMySql;
+    
     private ConnectionOracleDB connectionOracle;
+    
+    IServiceCompetitorMySql mysql;
+    IServiceCompetitorOracle oracle ;
+
+    
     
     public ServiceCompetitor(ConnectionMySqlDB connection, ConnectionOracleDB connection2)throws RemoteException{
        guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connectionMySql = connection;
         this.connectionOracle = connection2;
+        this.mysql = new ServiceCompetitorMySql(connection);
+        this.oracle = new ServiceCompetitorOracle(connection2);
     }
+    public ConnectionMySqlDB getConnectionMySql() {
+        return connectionMySql;
+    }
+
+    public ConnectionOracleDB getConnectionOracle() {
+        return connectionOracle;
+    }
+
+    
     
     
     @Override
     public Competitor searchCompetitorById(long id) throws RemoteException{
-        
-        String cad = "SELECT * FROM participante WHERE id ="+id;
-        ResultSet res = null;
-        ResultSet res2 = null;
+             
         Competitor searched = null;
-        Competitor searched2 = null;
-       // CompletableFuture<Object> cualquiera=null;
-        
+     
         try {
            
-            /*res = connectionMySql.executeQueryStatement(cad);   
-            res2 = connectionOracle.executeQueryStatement(cad);*/
             
-            CompletableFuture <ResultSet> future1 = CompletableFuture.supplyAsync(() -> connectionMySql.executeQueryStatement(cad));
-            CompletableFuture <ResultSet> future2 = CompletableFuture.supplyAsync(() -> connectionOracle.executeQueryStatement(cad));
+            CompletableFuture <Competitor> future1 = CompletableFuture.supplyAsync(() -> {
+                try {
+                    return mysql.searchCompetitorById(id);
+                } catch (RemoteException e) {
+                    
+                    e.printStackTrace();
+                    return null;
+                }
+            });
+            CompletableFuture <Competitor> future2 = CompletableFuture.supplyAsync(() -> {
+                try {
+                    return oracle.searchCompetitorById(id);
+                } catch (RemoteException e) {
+                    
+                    e.printStackTrace();
+                    return null;
+                }
+            });
 
             CompletableFuture<Object> cualquiera  = CompletableFuture.anyOf(future1,future2);
 
-            res = (ResultSet) cualquiera.get(); 
+            searched = (Competitor) cualquiera.get(); 
 
-            
-            while(res.next()){
-
-                //Competitor asd=(Competitor) cualquiera.get();
-                
-                searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
-                //searched2 = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
-            }
-            
-            /*if(!searched.equals(searched2)){
-                throw new Exception("Los items guardados no coinciden");
-            }*/
-        } catch (SQLException ex) {
-           
-             searched=null;
-        } catch (Exception ex) {
+        }  catch (Exception ex) {
             System.out.println("elementos encontrados pero no coinciden");
         }
         
