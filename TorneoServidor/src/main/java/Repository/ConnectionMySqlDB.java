@@ -23,12 +23,12 @@ public class ConnectionMySqlDB {
         public ConnectionMySqlDB( String us, String pass){
            user = us;
            password = pass;
-           nombreBD  = "AKIRA";
+           nombreBD  = "taller_rmi_db";
            conectar();
         }
 
         public ConnectionMySqlDB() {
-            this("root","root");
+            this("root","akira");
         }
 
         //Metodo para conectarce a una base de datos

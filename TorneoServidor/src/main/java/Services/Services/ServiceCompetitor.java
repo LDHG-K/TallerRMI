@@ -11,6 +11,8 @@ import Repository.ConnectionMySqlDB;
 import Repository.ConnectionOracleDB;
 import Services.Interfaces.IServiceCompetitor;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
+
+
 import com.mysql.cj.util.Util;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -19,6 +21,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -51,20 +54,32 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         ResultSet res2 = null;
         Competitor searched = null;
         Competitor searched2 = null;
+       // CompletableFuture<Object> cualquiera=null;
         
         try {
            
-            res = connectionMySql.executeQueryStatement(cad);
-            res2 = connectionOracle.executeQueryStatement(cad);
+            /*res = connectionMySql.executeQueryStatement(cad);   
+            res2 = connectionOracle.executeQueryStatement(cad);*/
+            
+            CompletableFuture <ResultSet> future1 = CompletableFuture.supplyAsync(() -> connectionMySql.executeQueryStatement(cad));
+            CompletableFuture <ResultSet> future2 = CompletableFuture.supplyAsync(() -> connectionOracle.executeQueryStatement(cad));
+
+            CompletableFuture<Object> cualquiera  = CompletableFuture.anyOf(future1,future2);
+
+            res = (ResultSet) cualquiera.get(); 
+
             
             while(res.next()){
+
+                //Competitor asd=(Competitor) cualquiera.get();
+                
                 searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
-                searched2 = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
+                //searched2 = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
             }
             
-            if(!searched.equals(searched2)){
+            /*if(!searched.equals(searched2)){
                 throw new Exception("Los items guardados no coinciden");
-            }
+            }*/
         } catch (SQLException ex) {
            
              searched=null;
