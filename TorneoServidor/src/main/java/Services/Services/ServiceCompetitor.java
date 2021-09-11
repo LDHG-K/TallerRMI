@@ -92,6 +92,13 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                 }
             });
 
+            if(future1.get().equals(future2.get()))
+            {
+                //throw new Exception();
+
+                System.out.println("son iguales");
+            }
+
             CompletableFuture<Object> cualquiera  = CompletableFuture.anyOf(future1,future2);
 
             searched = (Competitor) cualquiera.get(); 

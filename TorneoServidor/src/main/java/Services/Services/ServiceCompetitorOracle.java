@@ -42,7 +42,7 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
     @Override
     public Competitor searchCompetitorById(long id) throws RemoteException{
         
-        String cad = "SELECT * FROM participante WHERE id ="+id;
+        String cad = "SELECT * FROM participantes WHERE id ="+id;
         ResultSet res = null;
         Competitor searched = null;
         
