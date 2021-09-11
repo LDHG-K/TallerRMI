@@ -8,7 +8,6 @@ package Services.Services;
 
 import Models.Competitor;
 import Repository.ConnectionOracleDB;
-import Services.Interfaces.IServiceCompetitorOracle;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 
@@ -27,49 +26,43 @@ import java.util.logging.Logger;
  *
  * @author Luis
  */
-public class ServiceCompetitorOracle  extends UnicastRemoteObject implements IServiceCompetitorOracle{
+public class ServiceCompetitorOracle{
 
-     private ArrayList<IUpgradeableCompetitor> guisCompetitors;
-    
+    private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     private ConnectionOracleDB connectionOracle;
     
     public ServiceCompetitorOracle(ConnectionOracleDB connection)throws RemoteException{
-       guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
+        guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connectionOracle = connection;
     }
     
     
-    @Override
-    public Competitor searchCompetitorById(long id) throws RemoteException{
+    
+    public Competitor searchCompetitorById(long id) {
         
         String cad = "SELECT * FROM participantes WHERE id ="+id;
         ResultSet res = null;
-        Competitor searched = null;
-        
+        Competitor searched = null;        
         try {
-           
             res = connectionOracle.executeQueryStatement(cad);
-            
-            while(res.next()){
-                
+            while(res.next())
+            {
                 searched = new Competitor(id, res.getString(2), res.getObject(3,Date.class), res.getObject(4,Date.class));
-
             }
-            
-       
-        } catch (SQLException ex) {
-           
-             searched=null;
-        } catch (Exception ex) {
-            System.out.println("elementos encontrados pero no coinciden");
+        } 
+         catch (Exception ex) {
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             ex.printStackTrace();
+             System.out.println("======================================");
         }
         
         return searched;
         
     }
 
-    @Override
-    public void updateCompetitor(Competitor competitor)throws RemoteException {
+  
+    public void updateCompetitor(Competitor competitor) {
         
         String cad = "UPDATE participante SET apodo ='"+competitor.getApodo()+
                 "', fecha_inscripcion ='" + competitor.getFechaInscripcion()+
@@ -77,59 +70,59 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
                 "' WHERE id = "+competitor.getId();
         try {
             if (!connectionOracle.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada");
+                throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             e.printStackTrace();
+             System.out.println("======================================");
         }
         
     }
 
-    @Override
-    public void deleteCompetitor(long id)throws RemoteException {
+    
+    public void deleteCompetitor(long id) {
         
         
         String cad = "DELETE FROM participante WHERE id="+id;
         try {
             if (!connectionOracle.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada");
+                throw new Exception();
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             e.printStackTrace();
+             System.out.println("======================================");
         }
     }
 
-    @Override
-    public void createCompetitor(Competitor competitor)throws RemoteException {
-        
-        
-      
+    
+    public void createCompetitor(Competitor competitor) throws Exception {
+         
         String cad = "INSERT INTO participantes VALUES(seq_Participantes.nextval,'"
                                                 + competitor.getApodo()+"',TO_DATE('"                                           
                                                 + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD'),TO_DATE('"
                                                 + competitor.getFechaCaducidad().toString()+ "','YYYY-MM-DD'))";
 
         try {
-           
             if (!connectionOracle.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada en ORACLE");
+                throw new Exception();
                }
         } catch (Exception e) {
-            
-            connectionOracle.devolver();
-            connectionOracle.restablecerSecuencia("SEQ_PARTICIPANTES");
-            
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-            connectionOracle.aceptar();
         
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             e.printStackTrace();
+             System.out.println("======================================");
+             throw new Exception();
+        }
+            connectionOracle.aceptar();    
     }
 
-    @Override
-    public List<Competitor> searchAll() throws RemoteException {
+    
+    public List<Competitor> searchAll() {
         
         try {
             String cad = "SELECT * FROM participante";
@@ -154,18 +147,21 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
             }
             return competitors;
         } catch (SQLException ex) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+             System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             ex.printStackTrace();
+             System.out.println("======================================");
         }
-        
+        return null;
     }
 
-    @Override
-    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws RemoteException {
+    
+    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA)  {
         guisCompetitors.add(guiA);
     }
     
     
-    @Override
+    
     public HashMap<String,Integer> searchStatistics() {
         
     try {
@@ -197,6 +193,16 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
         }    
         
     }
+    
+    public void commit(){
+        connectionOracle.aceptar();
+    }
+    public void rollBack(){
+        connectionOracle.devolver();
+    }
+    
+    
+    
     
     //GUI TRICKS
     private void cambio(){

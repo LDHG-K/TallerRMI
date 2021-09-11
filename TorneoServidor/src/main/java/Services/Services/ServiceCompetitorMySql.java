@@ -100,7 +100,7 @@ public class ServiceCompetitorMySql{
     }
 
 
-    public void createCompetitor(Competitor competitor) {
+    public void createCompetitor(Competitor competitor) throws Exception {
         
         
         String cad = "INSERT INTO participante VALUES((SELECT Id FROM participante t ORDER BY t.Id DESC LIMIT 1)+1,'"
@@ -118,6 +118,7 @@ public class ServiceCompetitorMySql{
             System.out.println("Error procedimiento, Detalles:");
             e.printStackTrace();
             System.out.println("======================================");
+            throw new Exception();
         }
             connectionMySql.aceptar();
         
