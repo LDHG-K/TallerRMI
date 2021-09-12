@@ -8,7 +8,6 @@ package Services.Services;
 
 import Models.Competitor;
 import Repository.ConnectionOracleDB;
-import Services.Interfaces.IServiceCompetitorOracle;
 import Services.Interfaces.graficInterfaces.IUpgradeableCompetitor;
 
 
@@ -27,20 +26,28 @@ import java.util.logging.Logger;
  *
  * @author Luis
  */
-public class ServiceCompetitorOracle  extends UnicastRemoteObject implements IServiceCompetitorOracle{
+public class ServiceCompetitorOracle{
 
      private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     
     private ConnectionOracleDB connectionOracle;
     
+    public ConnectionOracleDB getConnectionOracle() {
+        return connectionOracle;
+    }
+
+
+
+
+
     public ServiceCompetitorOracle(ConnectionOracleDB connection)throws RemoteException{
        guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connectionOracle = connection;
     }
     
     
-    @Override
-    public Competitor searchCompetitorById(long id) throws RemoteException{
+    
+    public Competitor searchCompetitorById(long id)throws Exception{
         
         String cad = "SELECT * FROM participantes WHERE id ="+id;
         ResultSet res = null;
@@ -68,13 +75,13 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
         
     }
 
-    @Override
-    public void updateCompetitor(Competitor competitor)throws RemoteException {
+    
+    public void updateCompetitor(Competitor competitor)throws Exception {
         
-        String cad = "UPDATE participante SET apodo ='"+competitor.getApodo()+
-                "', fecha_inscripcion ='" + competitor.getFechaInscripcion()+
-                "', fecha_caducidad ='"+competitor.getFechaCaducidad()+
-                "' WHERE id = "+competitor.getId();
+        String cad = "UPDATE participantes SET apodo ='"+competitor.getApodo()+
+                "', fecha_inscripcion =TO_DATE('" + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD')"+
+                ", fecha_caducidad =TO_DATE('"+competitor.getFechaCaducidad().toString()+"','YYYY-MM-DD')"+
+                " WHERE id = "+competitor.getId();
         try {
             if (!connectionOracle.executeUpdateStatement(cad)) {
                 throw new Exception("Operacion no ejecutada");
@@ -86,11 +93,11 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
         
     }
 
-    @Override
-    public void deleteCompetitor(long id)throws RemoteException {
+   
+    public void deleteCompetitor(long id)throws Exception {
         
         
-        String cad = "DELETE FROM participante WHERE id="+id;
+        String cad = "DELETE FROM participantes WHERE id="+id;
         try {
             if (!connectionOracle.executeUpdateStatement(cad)) {
                 throw new Exception("Operacion no ejecutada");
@@ -101,8 +108,8 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
         }
     }
 
-    @Override
-    public void createCompetitor(Competitor competitor)throws RemoteException {
+    
+    public void createCompetitor(Competitor competitor)throws Exception {
         
         
       
@@ -128,8 +135,8 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
         
     }
 
-    @Override
-    public List<Competitor> searchAll() throws RemoteException {
+   
+    public List<Competitor> searchAll() throws Exception {
         
         try {
             String cad = "SELECT * FROM participante";
@@ -159,13 +166,13 @@ public class ServiceCompetitorOracle  extends UnicastRemoteObject implements ISe
         
     }
 
-    @Override
-    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws RemoteException {
+    
+    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws Exception {
         guisCompetitors.add(guiA);
     }
     
     
-    @Override
+  
     public HashMap<String,Integer> searchStatistics() {
         
     try {

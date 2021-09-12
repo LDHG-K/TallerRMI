@@ -29,9 +29,16 @@ public class ServiceCompetitorMySql{
 
     
     private ArrayList<IUpgradeableCompetitor> guisCompetitors;
+    
     private ConnectionMySqlDB connectionMySql;
     
     
+    public ConnectionMySqlDB getConnectionMySql() {
+        return connectionMySql;
+    }
+
+
+
     public ServiceCompetitorMySql(ConnectionMySqlDB connection){
         guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connectionMySql = connection;
