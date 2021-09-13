@@ -152,17 +152,17 @@ public class ServiceCompetitorMySql{
                 fechaCaducidad = res.getObject(4, Date.class);
 
                 competitors.add(new Competitor(id, apodo, fechaInscripcion, fechaCaducidad));
-                              
             }
             return competitors;
             
         } catch (SQLException ex) {
              System.out.println("======================================");    
              System.out.println("Error procedimiento, Detalles:");
-             ex.printStackTrace();
+             System.out.println(ex.getMessage());
              System.out.println("======================================");
+             throw new RuntimeException("Error al extraer datos en MySQL");
         }
-        return null;
+        
     }
 
  

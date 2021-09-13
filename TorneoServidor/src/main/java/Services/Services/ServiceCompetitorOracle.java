@@ -125,7 +125,7 @@ public class ServiceCompetitorOracle{
     public List<Competitor> searchAll() throws Exception {
         
         try {
-            String cad = "SELECT * FROM participante";
+            String cad = "SELECT * FROM participantes";
             ResultSet res;
             ArrayList<Competitor> competitors = new ArrayList<>();
 
@@ -151,8 +151,9 @@ public class ServiceCompetitorOracle{
              System.out.println("Error procedimiento, Detalles:");
              ex.printStackTrace();
              System.out.println("======================================");
+             throw new RuntimeException("Error al extraer datos en Oracle");
         }
-        return null;
+        
     }
 
     

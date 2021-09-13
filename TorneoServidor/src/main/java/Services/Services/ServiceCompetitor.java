@@ -228,27 +228,46 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     public List<Competitor> searchAll() throws RemoteException {
         
         try {
-            String cad = "SELECT * FROM participante";
-            ResultSet res;
-            ArrayList<Competitor> competitors = new ArrayList<>();
-
-            int id;
-            String apodo;
-            Date fechaInscripcion;
-            Date fechaCaducidad;
-
-           /* res = connectionMySql.executeQueryStatement(cad);
-            while(res.next()){
-
-                id = Integer.parseInt(res.getString(1));
-                apodo = res.getString(2);
-                fechaInscripcion = res.getObject(3, Date.class);
-                fechaCaducidad = res.getObject(4, Date.class);
-
-                competitors.add(new Competitor(id, apodo, fechaInscripcion, fechaCaducidad));
-                              
-            }*/
-            return competitors;
+            
+            //List<Competitor> competitorsMySql = null;            
+            //List<Competitor> competitorsOracle = null;
+            
+            CompletableFuture <List<Competitor>> future1 = CompletableFuture.supplyAsync
+            (() -> {
+                try {
+                    
+                    //System.out.println("En ejecución de forma paralela mysql");
+                    return mysql.searchAll();
+                    //Thread.sleep(3000);
+                    //System.out.println("finalizó MySql");
+                } catch (Exception ex) {
+                throw new RuntimeException("Fallo en ejecutar en MySql");
+                }
+            });
+            
+            CompletableFuture <List<Competitor>> future2 = CompletableFuture.supplyAsync
+            (() -> {
+                try {
+                    //System.out.println("En ejecución de forma paralela oracle");
+                    return oracle.searchAll();
+                    //Thread.sleep(5000);
+                    //System.out.println("finalizó Oracle");
+                } catch (Exception ex) {
+                throw new RuntimeException("Fallo en ejecutar en Oracle");
+                }
+            });
+            //competitorsMySql = future1.get();
+            //competitorsOracle = future2.get();
+            
+            //if (competitorsMySql.containsAll(competitorsOracle)) {
+            //    return competitorsMySql;
+            //}
+            //else{
+            //    throw new Exception("LISTAS NO COMPATIBLES");
+            //}
+            CompletableFuture<Object> cualquiera  = CompletableFuture.anyOf(future1,future2);
+            return (List<Competitor>) cualquiera.get();
+            
         } catch (Exception ex) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
