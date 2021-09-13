@@ -23,12 +23,12 @@ public class ConnectionMySqlDB {
         public ConnectionMySqlDB( String us, String pass){
            user = us;
            password = pass;
-           nombreBD  = "taller_rmi_db";
+           nombreBD  = "akira";
            conectar();
         }
 
         public ConnectionMySqlDB() {
-            this("root","akira");
+            this("root","root");
         }
 
         //Metodo para conectarce a una base de datos
@@ -80,7 +80,7 @@ public class ConnectionMySqlDB {
                 stmt.close();
                 return true;
             }catch(Exception ex){
-                System.out.println("No se pudo efectuar la grabacion..." + ex);
+                System.out.println("No se pudo efectuar la grabacion en MySql por :" + ex);
                 return false;
             }
         }
@@ -97,9 +97,7 @@ public class ConnectionMySqlDB {
             }
         }
         
-        public void restablecerSecuencia(String nombre){
-            
-        }
+        
         
  
         public void devolver(){

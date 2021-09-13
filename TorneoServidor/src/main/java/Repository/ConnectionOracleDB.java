@@ -85,8 +85,9 @@ public class ConnectionOracleDB {
                 stmt.close();
                 return true;
             }catch(Exception ex){
-                ex.printStackTrace();
-                //System.out.println("No se pudo efectuar la grabacion..." + ex);
+                
+                //ex.printStackTrace();
+                System.out.println("No se pudo efectuar la grabacion en Oracle..." + ex);
                 return false;
             }
         }
@@ -118,11 +119,13 @@ public class ConnectionOracleDB {
         }
         
         
-        public void restablecerSecuencia(String nombreSecuencia){
+        public void restablecerSecuencia(String nombreSecuencia) throws InterruptedException{
             
-            executeUpdateStatement("ALTER SEQUENCE "+nombreSecuencia+" increment by -1;");
-            executeUpdateStatement("SELECT "+nombreSecuencia+".nextval increment FROM DUAL;");
-            executeUpdateStatement("ALTER SEQUENCE "+nombreSecuencia+" increment by 1;");
+            executeUpdateStatement("ALTER SEQUENCE "+nombreSecuencia+" increment by -1");
+            Thread.sleep(100);
+            executeQueryStatement("SELECT "+nombreSecuencia+".nextval FROM DUAL");
+            Thread.sleep(100);
+            executeUpdateStatement("ALTER SEQUENCE "+nombreSecuencia+" increment by 1");
 
         }
         

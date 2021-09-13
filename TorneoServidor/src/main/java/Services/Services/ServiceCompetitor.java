@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.sql.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -157,37 +160,64 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     @Override
     public void createCompetitor(Competitor competitor)throws RemoteException {
         
-        /*
-        String cad = "INSERT INTO participante VALUES((SELECT Id FROM participante t ORDER BY t.Id DESC LIMIT 1)+1,'"
-                                                + competitor.getApodo()+"','"
-                                                + competitor.getFechaInscripcion()+"','"
-                                                + competitor.getFechaCaducidad()+ "')";
-        String cad2 = "INSERT INTO participantes VALUES(seq_Participantes.nextval,'"
-                                                + competitor.getApodo()+"',TO_DATE('"                                           
-                                                + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD'),TO_DATE('"
-                                                + competitor.getFechaCaducidad().toString()+ "','YYYY-MM-DD'))";
-
+        //================================================================
+//        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:SSS");
+//        LocalDateTime inicio;
+//        LocalDateTime fin;
+//        Duration duracion;
+//        
+//        inicio = LocalDateTime.now();
+//        System.out.println("Agregar Participante - Inicio : " + dtf.format(inicio));
+        //================================================================
+        
         try {
-            if (!connectionMySql.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada en MySQL");
+            CompletableFuture <Void> future1 = CompletableFuture.runAsync
+            (() -> {
+                try {
+                    
+                    //System.out.println("En ejecución de forma paralela mysql");
+                    mysql.createCompetitor(competitor);
+                    //Thread.sleep(3000);
+                    System.out.println("finalizó MySql");
+                } catch (Exception ex) {
+                throw new RuntimeException("Fallo en agregar en MySql");
+                }
+            });
+            CompletableFuture <Void> future2 = CompletableFuture.runAsync
+            (() -> {
+                try {
+                    //System.out.println("En ejecución de forma paralela oracle");
+                    oracle.createCompetitor(competitor);
+                    //Thread.sleep(5000);
+                    System.out.println("finalizó Oracle");
+                } catch (Exception ex) {
+                throw new RuntimeException("Fallo en agregar en Oracle");
+                }
+            });
+            
+            System.out.println("Inicio de la ejecución");
+            //esperando
+            future1.get();
+            future2.get();
+            }  
+         catch (Exception e) {
+            
+            mysql.rollBack();
+            oracle.rollBack();
+            try {
+                oracle.restablecerSeq("SEQ_PARTICIPANTES");
+            } catch (InterruptedException ex) {
             }
-            
-         
-            if (!connectionOracle.executeUpdateStatement(cad2)) {
-                throw new Exception("Operacion no ejecutada en ORACLE");
-               }
-        } catch (Exception e) {
-            
-            connectionMySql.devolver();
-            connectionOracle.devolver();
-            connectionOracle.restablecerSecuencia("SEQ_PARTICIPANTES");
-            
             System.out.println(e.getMessage());
-            e.printStackTrace();
+             System.out.println("RollBack Finalizado exitosamente");
         }
-            connectionMySql.aceptar();
-            connectionOracle.aceptar();
-        */
+            mysql.commit();
+            oracle.commit();
+            //fin = LocalDateTime.now();
+            //System.out.println("Agregar participante - Fin : " + dtf.format(fin));
+            //duracion = Duration.between(fin, inicio);
+            //System.out.println("Agregar participante  - Duración : " + duracion);
+        
     }
 
     @Override

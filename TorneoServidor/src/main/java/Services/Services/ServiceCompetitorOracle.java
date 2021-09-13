@@ -35,19 +35,11 @@ public class ServiceCompetitorOracle{
         return connectionOracle;
     }
 
-
-
-
-
     public ServiceCompetitorOracle(ConnectionOracleDB connection)throws RemoteException{
         guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connectionOracle = connection;
     }
-    
-    
-    
 
-   
     public Competitor searchCompetitorById(long id)throws Exception{
 
         
@@ -107,9 +99,9 @@ public class ServiceCompetitorOracle{
         }
     }
 
-    public void createCompetitor(Competitor competitor)throws Exception {
+    public void createCompetitor(Competitor competitor) {
         
-        String cad = "INSERT INTO participantes VALUES(seq_Participantes.nextval,'"
+        String cad = "INSERT INTO participantes VALUES(SEQ_PARTICIPANTES.NEXTVAL,'"
                                                 + competitor.getApodo()+"',TO_DATE('"                                           
                                                 + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD'),TO_DATE('"
                                                 + competitor.getFechaCaducidad().toString()+ "','YYYY-MM-DD'))";
@@ -122,9 +114,10 @@ public class ServiceCompetitorOracle{
         
              System.out.println("======================================");    
              System.out.println("Error procedimiento, Detalles:");
-             e.printStackTrace();
+             System.out.println("Agregar en servicio oracle");
+             System.out.println(e.getMessage());
              System.out.println("======================================");
-             throw new Exception();
+             throw new RuntimeException();
         }
             connectionOracle.aceptar();    
     }
@@ -207,7 +200,9 @@ public class ServiceCompetitorOracle{
         connectionOracle.devolver();
     }
     
-    
+    public void restablecerSeq(String seq) throws InterruptedException{
+        connectionOracle.restablecerSecuencia(seq);
+    }
     
     
     //GUI TRICKS
