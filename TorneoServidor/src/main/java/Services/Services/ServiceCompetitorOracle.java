@@ -31,6 +31,14 @@ public class ServiceCompetitorOracle{
     private ArrayList<IUpgradeableCompetitor> guisCompetitors;
     private ConnectionOracleDB connectionOracle;
     
+    public ConnectionOracleDB getConnectionOracle() {
+        return connectionOracle;
+    }
+
+
+
+
+
     public ServiceCompetitorOracle(ConnectionOracleDB connection)throws RemoteException{
         guisCompetitors = new ArrayList<IUpgradeableCompetitor>();
         this.connectionOracle = connection;
@@ -38,7 +46,11 @@ public class ServiceCompetitorOracle{
     
     
     
+<<<<<<< HEAD
     public Competitor searchCompetitorById(long id) {
+=======
+    public Competitor searchCompetitorById(long id)throws Exception{
+>>>>>>> main
         
         String cad = "SELECT * FROM participantes WHERE id ="+id;
         ResultSet res = null;
@@ -61,13 +73,18 @@ public class ServiceCompetitorOracle{
         
     }
 
+<<<<<<< HEAD
   
     public void updateCompetitor(Competitor competitor) {
+=======
+    
+    public void updateCompetitor(Competitor competitor)throws Exception {
+>>>>>>> main
         
-        String cad = "UPDATE participante SET apodo ='"+competitor.getApodo()+
-                "', fecha_inscripcion ='" + competitor.getFechaInscripcion()+
-                "', fecha_caducidad ='"+competitor.getFechaCaducidad()+
-                "' WHERE id = "+competitor.getId();
+        String cad = "UPDATE participantes SET apodo ='"+competitor.getApodo()+
+                "', fecha_inscripcion =TO_DATE('" + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD')"+
+                ", fecha_caducidad =TO_DATE('"+competitor.getFechaCaducidad().toString()+"','YYYY-MM-DD')"+
+                " WHERE id = "+competitor.getId();
         try {
             if (!connectionOracle.executeUpdateStatement(cad)) {
                 throw new Exception();
@@ -81,11 +98,16 @@ public class ServiceCompetitorOracle{
         
     }
 
+<<<<<<< HEAD
     
     public void deleteCompetitor(long id) {
+=======
+   
+    public void deleteCompetitor(long id)throws Exception {
+>>>>>>> main
         
         
-        String cad = "DELETE FROM participante WHERE id="+id;
+        String cad = "DELETE FROM participantes WHERE id="+id;
         try {
             if (!connectionOracle.executeUpdateStatement(cad)) {
                 throw new Exception();
@@ -99,8 +121,15 @@ public class ServiceCompetitorOracle{
     }
 
     
+<<<<<<< HEAD
     public void createCompetitor(Competitor competitor) throws Exception {
          
+=======
+    public void createCompetitor(Competitor competitor)throws Exception {
+        
+        
+      
+>>>>>>> main
         String cad = "INSERT INTO participantes VALUES(seq_Participantes.nextval,'"
                                                 + competitor.getApodo()+"',TO_DATE('"                                           
                                                 + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD'),TO_DATE('"
@@ -121,8 +150,13 @@ public class ServiceCompetitorOracle{
             connectionOracle.aceptar();    
     }
 
+<<<<<<< HEAD
     
     public List<Competitor> searchAll() {
+=======
+   
+    public List<Competitor> searchAll() throws Exception {
+>>>>>>> main
         
         try {
             String cad = "SELECT * FROM participante";
@@ -156,12 +190,20 @@ public class ServiceCompetitorOracle{
     }
 
     
+<<<<<<< HEAD
     public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA)  {
+=======
+    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws Exception {
+>>>>>>> main
         guisCompetitors.add(guiA);
     }
     
     
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> main
     public HashMap<String,Integer> searchStatistics() {
         
     try {
