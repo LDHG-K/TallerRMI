@@ -46,11 +46,10 @@ public class ServiceCompetitorOracle{
     
     
     
-<<<<<<< HEAD
-    public Competitor searchCompetitorById(long id) {
-=======
+
+   
     public Competitor searchCompetitorById(long id)throws Exception{
->>>>>>> main
+
         
         String cad = "SELECT * FROM participantes WHERE id ="+id;
         ResultSet res = null;
@@ -72,14 +71,8 @@ public class ServiceCompetitorOracle{
         return searched;
         
     }
-
-<<<<<<< HEAD
-  
-    public void updateCompetitor(Competitor competitor) {
-=======
     
     public void updateCompetitor(Competitor competitor)throws Exception {
->>>>>>> main
         
         String cad = "UPDATE participantes SET apodo ='"+competitor.getApodo()+
                 "', fecha_inscripcion =TO_DATE('" + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD')"+
@@ -98,14 +91,8 @@ public class ServiceCompetitorOracle{
         
     }
 
-<<<<<<< HEAD
-    
-    public void deleteCompetitor(long id) {
-=======
    
     public void deleteCompetitor(long id)throws Exception {
->>>>>>> main
-        
         
         String cad = "DELETE FROM participantes WHERE id="+id;
         try {
@@ -120,16 +107,8 @@ public class ServiceCompetitorOracle{
         }
     }
 
-    
-<<<<<<< HEAD
-    public void createCompetitor(Competitor competitor) throws Exception {
-         
-=======
     public void createCompetitor(Competitor competitor)throws Exception {
         
-        
-      
->>>>>>> main
         String cad = "INSERT INTO participantes VALUES(seq_Participantes.nextval,'"
                                                 + competitor.getApodo()+"',TO_DATE('"                                           
                                                 + competitor.getFechaInscripcion().toString()+"','YYYY-MM-DD'),TO_DATE('"
@@ -150,13 +129,7 @@ public class ServiceCompetitorOracle{
             connectionOracle.aceptar();    
     }
 
-<<<<<<< HEAD
-    
-    public List<Competitor> searchAll() {
-=======
-   
     public List<Competitor> searchAll() throws Exception {
->>>>>>> main
         
         try {
             String cad = "SELECT * FROM participante";
@@ -190,20 +163,11 @@ public class ServiceCompetitorOracle{
     }
 
     
-<<<<<<< HEAD
-    public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA)  {
-=======
     public void addGUICompetitorUpgradable(IUpgradeableCompetitor guiA) throws Exception {
->>>>>>> main
         guisCompetitors.add(guiA);
     }
     
     
-<<<<<<< HEAD
-    
-=======
-  
->>>>>>> main
     public HashMap<String,Integer> searchStatistics() {
         
     try {
