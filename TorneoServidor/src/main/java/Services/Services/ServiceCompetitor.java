@@ -104,7 +104,8 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     @Override
     public void updateCompetitor(Competitor competitor)throws RemoteException {
         
-       
+       try {
+
         CompletableFuture <Void> future1 = CompletableFuture.runAsync(() -> {
             try {
                 mysql.updateCompetitor(competitor);;
@@ -126,12 +127,15 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
         });
         future1.join();
         future2.join();
+           
+       } catch (Exception e) {
+        mysql.rollBack();
+        oracle.rollBack();
+       }
 
-        if(future1.isDone() && future2.isDone())
-        {
-        mysql.getConnectionMySql().aceptar();
-        oracle.getConnectionOracle().aceptar();
-        }
+       mysql.commit();
+       oracle.commit();
+        
         
 
 
