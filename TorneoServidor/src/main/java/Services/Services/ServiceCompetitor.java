@@ -51,7 +51,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     }
     
     
-    // Hacer tristancho
+    
     @Override
     public Competitor searchCompetitorById(long id) throws RemoteException{
              
@@ -65,25 +65,19 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                 try {
                     return mysql.searchCompetitorById(id);
                 } catch (Exception e) {
-                    
-                    e.printStackTrace();
-                    return null;
+                    throw new RuntimeException("Error al buscar en mysql ");
                 }
             });
             CompletableFuture <Competitor> future2 = CompletableFuture.supplyAsync(() -> {
                 try {
                     return oracle.searchCompetitorById(id);
                 } catch (Exception e) {
-                    
-                    e.printStackTrace();
-                    return null;
+                    throw new RuntimeException("Error al buscar en Oracle ");
                 }
             });
 
             if(future1.get().equals(future2.get()))
             {
-                //throw new Exception();
-
                 System.out.println("son iguales");
             }
                 
@@ -111,7 +105,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                 mysql.updateCompetitor(competitor);;
             } catch (Exception e) {
                 
-                e.printStackTrace();
+                throw new RuntimeException();
                
             }
         });
@@ -121,7 +115,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                 oracle.updateCompetitor(competitor);;
             } catch (Exception e) {
                 
-                e.printStackTrace();
+                throw new RuntimeException();
                
             }
         });
@@ -299,7 +293,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             return (List<Competitor>) cualquiera.get();
             
         } catch (Exception ex) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new RuntimeException();
         }
         
     }
@@ -314,30 +308,46 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     public HashMap<String,Integer> searchStatistics() {
         
     try {
-            String cad = "select MonthName(fecha_caducidad), count(*)\n" +
-                    "  from participante\n" +
-                    " where fecha_caducidad >= makedate(year(curdate()), 1)\n" +
-                    "   and fecha_caducidad < makedate(year(curdate()) + 1, 1)\n" +
-                    " group by MonthName(fecha_caducidad)";
             
-            ResultSet res;
+            CompletableFuture <HashMap <String, Integer>> future1 = CompletableFuture.supplyAsync
+            (() -> {
+                try {
+                    
+                    //System.out.println("En ejecución de forma paralela mysql");
+                    return mysql.searchStatistics();
+                    //Thread.sleep(3000);
+                    //System.out.println("finalizó MySql");
+                } catch (Exception ex) {
+                throw new RuntimeException("Fallo en ejecutar en MySql");
+                }
+            });
             
-            HashMap <String, Integer> map = new HashMap <String, Integer> ();
+            CompletableFuture <HashMap <String, Integer>> future2 = CompletableFuture.supplyAsync
+            (() -> {
+                try {
+                    //System.out.println("En ejecución de forma paralela oracle");
+                    return oracle.searchStatistics();
+                    //Thread.sleep(5000);
+                    //System.out.println("finalizó Oracle");
+                } catch (Exception ex) {
+                throw new RuntimeException("Fallo en ejecutar en Oracle");
+                }
+            });
+            //competitorsMySql = future1.get();
+            //competitorsOracle = future2.get();
             
+            //if (competitorsMySql.containsAll(competitorsOracle)) {
+            //    return competitorsMySql;
+            //}
+            //else{
+            //    throw new Exception("LISTAS NO COMPATIBLES");
+            //}
+            CompletableFuture<Object> cualquiera  = CompletableFuture.anyOf(future1,future2);
+            return (HashMap <String, Integer>) cualquiera.get();
             
-            Integer valor;
-            String llave;
-
-            /*res = connectionMySql.executeQueryStatement(cad);
-            while(res.next()){
-
-                llave = res.getString(1);
-                valor = Integer.parseInt(res.getString(2));
-                
-                map.put(llave, valor);
-            }*/
-            return map;
-        } catch (Exception ex) {
+        } 
+          
+        catch (Exception ex) {
             throw new RuntimeException("Error al extraer las estadisticas");
         }    
         
