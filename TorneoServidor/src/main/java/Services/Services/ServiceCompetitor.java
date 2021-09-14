@@ -147,18 +147,48 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
     // Hacer Brayan
     @Override
     public void deleteCompetitor(long id)throws RemoteException {
-        
-        /*
-        String cad = "DELETE FROM participante WHERE id="+id;
-        try {
-            if (!connectionMySql.executeUpdateStatement(cad)) {
-                throw new Exception("Operacion no ejecutada");
+
+
+
+    try {
+
+                CompletableFuture <Void> future1 = CompletableFuture.runAsync(() -> {
+                    try {
+                        mysql.deleteCompetitor(id);
+                    } catch (Exception e) {
+
+                        throw new RuntimeException("Eliminacion fallida en MySQL");
+
+
+                    }
+                });
+
+                CompletableFuture <Void> future2 = CompletableFuture.runAsync(() -> {
+                    try {
+                        oracle.deleteCompetitor(id);
+                    } catch (Exception e) {
+
+                        throw new RuntimeException("Eliminacion fallida en Oracle");
+
+
+
+                    }
+                });
+            future1.get();
+            future2.get();
+            }  catch (Exception e)
+            {
+                System.out.println(e.getMessage());
+                System.out.println("Eliminacion Fallida");
+                mysql.rollBack();
+                oracle.rollBack();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-        */
+
+            mysql.commit();
+            oracle.commit();
+
+
+
     }
 
     @Override

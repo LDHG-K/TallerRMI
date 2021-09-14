@@ -101,8 +101,10 @@ public class ServiceCompetitorMySql{
         } catch (Exception e) {
              System.out.println("======================================");    
              System.out.println("Error procedimiento, Detalles:");
-             e.printStackTrace();
+             System.out.println("Borrado Fallido en MySql");
+             System.out.println(e.getMessage());
              System.out.println("======================================");
+             throw new RuntimeException();
         }
     }
 
