@@ -129,13 +129,6 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
 
        mysql.commit();
        oracle.commit();
-        
-        
-
-
-
-
-
     }
 
     // Hacer Brayan

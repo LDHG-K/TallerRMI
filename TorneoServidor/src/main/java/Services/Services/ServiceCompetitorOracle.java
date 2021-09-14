@@ -151,9 +151,9 @@ public class ServiceCompetitorOracle{
         } catch (SQLException ex) {
              System.out.println("======================================");    
              System.out.println("Error procedimiento, Detalles:");
-             ex.printStackTrace();
+             System.out.println(ex.getMessage());
              System.out.println("======================================");
-             throw new RuntimeException("Error al extraer datos en Oracle");
+             throw new RuntimeException("Error al extraer estadisticas en Oracle");
         }
         
     }

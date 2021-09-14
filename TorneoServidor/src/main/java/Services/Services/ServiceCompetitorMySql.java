@@ -201,7 +201,11 @@ public class ServiceCompetitorMySql{
             }
             return map;
         } catch (SQLException ex) {
-            throw new RuntimeException("Error al extraer las estadisticas");
+            System.out.println("======================================");    
+             System.out.println("Error procedimiento, Detalles:");
+             System.out.println(ex.getMessage());
+             System.out.println("======================================");
+            throw new RuntimeException("Error al extraer las estadisticas de MySql");
         }    
         
     }
