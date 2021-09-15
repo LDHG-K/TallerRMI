@@ -33,6 +33,11 @@ public class GUIEditarParticipante extends javax.swing.JFrame {
         servicioCompetidor = ser;
         setLocationRelativeTo(null);
         competitorController = new CompetitorController(ser);
+        
+        txtApodo.setEnabled(false);
+       jDateChooser1.setEnabled(false);
+       jDateChooser2.setEnabled(false);
+       btnAdicionar.setEnabled(false);
     }
 
     /**
@@ -158,11 +163,14 @@ public class GUIEditarParticipante extends javax.swing.JFrame {
         
        try {
            competitorController.editarParticipante(new Competitor(Long.parseLong(txtID.getText()),apodo,fecha1,fecha2));
+           btnAdicionar.setEnabled(false);
+           JOptionPane.showMessageDialog(this, "El competidor ha sido adicionado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
        } catch (RemoteException ex) {
-           Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+           JOptionPane.showMessageDialog(this, "El competidor no pudo ser adicionado" + ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+           //Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
        }
         
-        JOptionPane.showMessageDialog(this, "El competidor ha sido adicionado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        
        
        txtApodo.setText("");
        txtApodo.setEnabled(false);
@@ -179,12 +187,16 @@ public class GUIEditarParticipante extends javax.swing.JFrame {
          Long id = Long.parseLong(txtID.getText());
        try {
            participante = competitorController.buscarParticipante(id);
+            txtApodo.setEnabled(true);
+            jDateChooser1.setEnabled(true);
+            jDateChooser2.setEnabled(true);
+            btnAdicionar.setEnabled(true);
        } catch (RemoteException ex) {
             JOptionPane.showMessageDialog(this, "El participante no fue encontrado", "Aviso", JOptionPane.INFORMATION_MESSAGE);
        
-           Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+         //  Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
        } catch (Exception ex) {
-           Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+       //    Logger.getLogger(GUIEditarParticipante.class.getName()).log(Level.SEVERE, null, ex);
        }
        
        txtApodo.setText(participante.getApodo());

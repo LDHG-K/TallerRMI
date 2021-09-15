@@ -87,6 +87,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
 
         }  catch (Exception ex) {
             System.out.println("elementos encontrados pero no coinciden");
+            throw  new RuntimeException(ex.getMessage());
         }
         
         return searched;
@@ -125,6 +126,8 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
        } catch (Exception e) {
         mysql.rollBack();
         oracle.rollBack();
+           throw  new RuntimeException(ex.getMessage());
+        
        }
 
        mysql.commit();
@@ -169,6 +172,8 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
                 System.out.println("Eliminacion Fallida");
                 mysql.rollBack();
                 oracle.rollBack();
+           throw  new RuntimeException(e.getMessage());
+        
             }
 
             mysql.commit();
@@ -231,6 +236,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
             }
             System.out.println(e.getMessage());
              System.out.println("RollBack Finalizado exitosamente");
+             throw  new RuntimeException(e.getMessage());
         }
             mysql.commit();
             oracle.commit();

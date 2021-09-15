@@ -141,7 +141,7 @@ public class GUIListarParticipante extends javax.swing.JFrame implements IUpgrad
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        refrescarListaEstudiantes();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     

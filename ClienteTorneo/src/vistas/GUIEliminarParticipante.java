@@ -29,6 +29,7 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         competitorController = new CompetitorController(servicioCompetitor);
+        btnEliminar1.setEnabled(false);
     }
 
     /**
@@ -49,7 +50,7 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        btnConsultar1 = new javax.swing.JButton();
+        btnEliminar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar Participante");
@@ -75,10 +76,10 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
 
         jDateChooser2.setEnabled(false);
 
-        btnConsultar1.setText("Eliminar");
-        btnConsultar1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar1.setText("Eliminar");
+        btnEliminar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConsultar1ActionPerformed(evt);
+                btnEliminar1ActionPerformed(evt);
             }
         });
 
@@ -86,27 +87,30 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnConsultar)
-                .addGap(95, 95, 95))
             .addGroup(layout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnConsultar1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCodigo)
                     .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtApodo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(74, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnConsultar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnEliminar1)
+                        .addGap(123, 123, 123)))
+                .addGap(95, 95, 95))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,11 +132,11 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConsultar)
-                    .addComponent(btnConsultar1))
-                .addGap(26, 26, 26))
+                    .addComponent(btnEliminar1))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         pack();
@@ -147,8 +151,10 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
             txtApodo.setText(participante.getApodo());
             jDateChooser1.setDate(participante.getFechaInscripcion());
             jDateChooser2.setDate(participante.getFechaCaducidad());
+            JOptionPane.showMessageDialog(this, "El Participante que busca se encontró", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            btnEliminar1.setEnabled(true);
         } catch (RemoteException ex) {
-            JOptionPane.showMessageDialog(this, "El Participante que busca no se encuentra en la base de datos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "El Participante que busca no se encuentra en la base de datos", "Aviso", JOptionPane.WARNING_MESSAGE);
             //Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             //Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
@@ -158,15 +164,20 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 
-    private void btnConsultar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultar1ActionPerformed
+    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
         
         
         if (JOptionPane.showConfirmDialog(null, "¿Estas seguro que este es el item a eliminar?", "WARNING",
         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
                 competitorController.eliminarParticipante(participante);
+                btnEliminar1.setEnabled(false);
+                txtCodigo.setText("");
+                txtApodo.setText("");
+                jDateChooser1.setDate(null);
+                jDateChooser2.setDate(null);
             } catch (RemoteException ex) {
-                
+                JOptionPane.showMessageDialog(this, "El Participante no se puede eliminar revise la base de datos", "Aviso", JOptionPane.WARNING_MESSAGE);
                 //Logger.getLogger(GUIEliminarParticipante.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -179,7 +190,7 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
         }
       
         
-    }//GEN-LAST:event_btnConsultar1ActionPerformed
+    }//GEN-LAST:event_btnEliminar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,7 +198,7 @@ public class GUIEliminarParticipante extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConsultar;
-    private javax.swing.JButton btnConsultar1;
+    private javax.swing.JButton btnEliminar1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
