@@ -88,7 +88,6 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -103,12 +102,12 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(48, 48, 48)
                                 .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtApodo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(128, 128, 128)
                         .addComponent(btnConsultar)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,19 +143,23 @@ public class GUIConsultarParticipante extends javax.swing.JFrame implements IUpg
         
         try {
             participante = competitorController.buscarParticipante(id);
+            if (participante == null) {
+                throw new Exception();
+            }
+            System.out.println("hola");
+            JOptionPane.showMessageDialog(this, "El participante " + id +" fue encontrado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             txtApodo.setText(participante.getApodo());
             jDateChooser1.setDate(participante.getFechaInscripcion());
             jDateChooser2.setDate(participante.getFechaCaducidad());
-            JOptionPane.showMessageDialog(this, "El participante " + id +" fue encontrado!", "Aviso", JOptionPane.ERROR_MESSAGE);
         } catch (RemoteException ex) {
-            //System.out.println("hola");
             JOptionPane.showMessageDialog(this, "El participante de código " + id +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
+            
             //txtCodigo.setText("");
             //txtCodigo.grabFocus();    
             //Logger.getLogger(GUIConsultarParticipante.class.getName()).log(Level.SEVERE, null, ex);
            
         } catch (Exception ex) {
-           // Logger.getLogger(GUIConsultarParticipante.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "El participante de código " + id +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
         }
         
     }//GEN-LAST:event_btnConsultarActionPerformed

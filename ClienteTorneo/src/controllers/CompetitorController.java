@@ -24,12 +24,7 @@ public class CompetitorController {
         this.servicio = servicio;
     }
 
-   public Competitor buscarParticipante(Long id) throws RemoteException, Exception{
-       
-       if(servicio.searchCompetitorById(id)==null)
-       {
-           JOptionPane.showMessageDialog(null, "El participante de código " + id +" NO existe!", "Aviso", JOptionPane.ERROR_MESSAGE);
-       }
+   public Competitor buscarParticipante(Long id) throws RemoteException{
        
        return servicio.searchCompetitorById(id);
    } 

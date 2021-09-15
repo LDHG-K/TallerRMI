@@ -126,7 +126,7 @@ public class ServiceCompetitor  extends UnicastRemoteObject implements IServiceC
        } catch (Exception e) {
         mysql.rollBack();
         oracle.rollBack();
-           throw  new RuntimeException(ex.getMessage());
+           throw  new RuntimeException(e.getMessage());
         
        }
 
